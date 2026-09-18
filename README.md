@@ -20,7 +20,7 @@ Open `index.html` and edit the `LINKS` block near the bottom (the only place the
 ```js
 const LINKS = {
   dpsApp: 'https://dps.acktvt.com',      // Data Protection Suite sign-in; "/signup" is appended for the trial button
-  contact: 'mailto:hello@prowessz.com?subject=acktvt%20walkthrough',
+  contact: 'mailto:acktvt@prowessz.com?subject=acktvt%20walkthrough',
   privacy: 'https://prowessz.com/privacy',
 };
 ```
