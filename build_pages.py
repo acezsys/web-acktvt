@@ -38,7 +38,7 @@ EXTRA_CSS = """
   .chips label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:13.5px;cursor:pointer;background:var(--paper);transition:all .15s}
   .chips label:hover{border-color:var(--green)}
   .chips input{accent-color:var(--green);margin:0}
-  .chips label:has(input:checked){background:var(--mint-soft);border-color:var(--green);color:var(--green-deep);font-weight:600}
+  .chips label:has(input:checked),.chips label.on{background:var(--mint-soft);border-color:var(--green);color:var(--green-deep);font-weight:600}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
   .f label{font-size:13px;font-weight:600;color:var(--ink-2)}
@@ -83,8 +83,11 @@ FORM_JS = """
   document.getElementById('burger')?.addEventListener('click', () => { const n = document.getElementById('nav'); const open = n.classList.toggle('open'); document.getElementById('burger').setAttribute('aria-expanded', open); });
   const form = document.getElementById('lead'), ok = document.getElementById('ok'), err = document.getElementById('err'), btn = document.getElementById('send');
   const TO = 'acktvt@prowessz.com';
-  form.querySelector('[name=_next]').value = location.href.split('?')[0].split('#')[0] + '?sent=1';
-  if (new URLSearchParams(location.search).get('sent') === '1') { form.style.display = 'none'; ok.style.display = 'block'; }
+  // highlight chosen chips on browsers without :has() (older Firefox/Safari)
+  const paint = () => form.querySelectorAll('.chips label').forEach(l => l.classList.toggle('on', l.querySelector('input').checked));
+  form.addEventListener('change', paint); paint();
+  const HOME = location.origin + location.pathname.replace(/[^/]*$/, '');   // https://acktvt.com/ on the live site
+  form.querySelector('[name=_next]').value = HOME + '?sent=1';
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
@@ -97,6 +100,7 @@ FORM_JS = """
       const j = await r.json().catch(() => ({}));
       if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'Could not send');
       form.style.display = 'none'; ok.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => { location.href = HOME + '?sent=1'; }, 2200);
     } catch (ex) {
       // network or relay hiccup: fall back to the classic POST, which redirects back here with ?sent=1
       btn.disabled = false; btn.textContent = 'Send';
@@ -113,7 +117,7 @@ def chips(name, options, multi=False):
     return '<div class="chips">' + ''.join(f'<label><input type="{t}" name="{name}" value="{o}"{" required" if (not multi and i == 0) else ""}> {o}</label>' for i, o in enumerate(options)) + '</div>'
 
 
-def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, subject, ok_text):
+def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, subject, ok_text, name_ph, org_ph):
     qhtml = ''.join(f'<div class="q"><label class="t">{q}{("<small>" + hint + "</small>") if hint else ""}</label>{chips(name, opts, multi)}</div>' for q, hint, name, opts, multi in questions)
     html = f"""<!doctype html>
 <html lang="en">
@@ -137,7 +141,7 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
 <section class="light" style="padding:0">
   <div class="wrap lead-grid">
     <div class="formcard">
-      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>{ok_text}</p><a class="btn btn-green" href="index.html">Back to acktvt.com</a></div>
+      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>{ok_text}</p><p class="note">Taking you back to acktvt.com…</p></div>
       <form id="lead" action="https://formsubmit.co/acktvt@prowessz.com" method="POST" novalidate>
         <input type="hidden" name="_subject" value="{subject}">
         <input type="hidden" name="_template" value="table">
@@ -150,8 +154,8 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
         <div id="err" class="err"></div>
         {qhtml}
         <div class="row">
-          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="Dr Meera Nair"></div>
-          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="Sunrise Hospital / Precision Gears Pvt Ltd"></div>
+          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="{name_ph}"></div>
+          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="{org_ph}"></div>
         </div>
         <div class="row">
           <div class="f"><label for="email">Work e-mail</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@yourcompany.in"></div>
@@ -200,7 +204,8 @@ page('dps.html', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 202
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Data Protection Suite enquiry',
-     'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.')
+     'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.',
+     'Dr Meera Nair', 'Sunrise Hospital / Lotus Path Lab')
 
 # ---------------------------------------------------------------- BMS
 page('bms.html', 'Business Management Suite', 'Business Management Suite · for growing Indian manufacturers',
@@ -226,7 +231,8 @@ page('bms.html', 'Business Management Suite', 'Business Management Suite · for 
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Business Management Suite enquiry',
-     'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.')
+     'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.',
+     'Rohan Deshmukh', 'Precision Gears Pvt Ltd / Apex Engineering Works')
 
 # ---------------------------------------------------------------- privacy
 priv = f"""<!doctype html>

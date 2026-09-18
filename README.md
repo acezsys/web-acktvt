@@ -53,7 +53,8 @@ that needs no account and no server. One-time setup:
    link. Click it.
 3. Every later submission (from either page) arrives as an e-mail with the
    answers in a table; the visitor's address is set as Reply-To so you can
-   answer directly. Do step 1 once more from `bms.html` if the second form's
+   answer directly. The visitor sees a thank-you for two seconds and is then
+   returned to the home page (never a FormSubmit page). Do step 1 once more from `bms.html` if the second form's
    first submission also asks for activation.
 
 The address is set in two places in `build_pages.py` (`TO` and the form

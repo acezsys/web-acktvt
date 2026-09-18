@@ -42,6 +42,8 @@
   .btn-outline{background:transparent;color:var(--green);border-color:var(--green)}
   .btn-outline:hover{background:var(--green);color:#fff}
   .btn svg{width:16px;height:16px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:#fff;color:var(--ink);border-radius:14px;padding:14px 18px;box-shadow:0 20px 60px rgba(0,0,0,.35);font-size:14px;max-width:calc(100% - 32px);z-index:60;transition:opacity .35s,transform .35s;border-left:4px solid var(--green)}
+  .toast.on{opacity:1;transform:translate(-50%,0)}
   .btn-spark{position:relative;overflow:hidden;isolation:isolate}
   .btn-spark.alt{background:var(--gold-bright);box-shadow:0 8px 24px rgba(217,169,74,.35)}
   .btn-spark.alt:hover{background:var(--gold)}
@@ -65,6 +67,8 @@
   .brand .word{font-family:var(--font-body);font-weight:900;font-size:34px;letter-spacing:-.035em;line-height:1}
   .brand .word .k{color:var(--gold)}
   .brand .sub{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-bright);margin-top:4px;font-weight:700}
+  .brand .by{display:block;font-size:12.5px;color:#fff;margin-top:5px;font-weight:500;letter-spacing:0;text-transform:none}
+  footer .brand{align-items:flex-start}footer .brand .mark{margin-top:2px}
   .menu{display:flex;align-items:center;gap:6px}
   .menu a{color:rgba(255,255,255,.82);font-size:14.5px;font-weight:500;padding:8px 12px;border-radius:8px}
   .menu a:hover{color:#fff;background:rgba(255,255,255,.08)}
@@ -104,8 +108,8 @@
   .cap .txt{font-size:13px;line-height:1.35;color:rgba(255,255,255,.72);font-weight:500;transition:opacity .4s}
   .cap .txt b{color:#fff}
   .dots{display:flex;gap:6px;flex:none}
-  .dots button{width:26px;height:6px;border-radius:3px;border:0;padding:0;background:rgba(255,255,255,.18);position:relative;overflow:hidden;cursor:pointer}
-  .dots button i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--gold-bright)}
+  .dots button{width:28px;height:22px;border-radius:3px;border:0;padding:8px 0;background:none;position:relative;cursor:pointer;background-clip:content-box;background-color:rgba(255,255,255,.18)}
+  .dots button i{position:absolute;left:0;top:8px;bottom:8px;width:0;background:var(--gold-bright);border-radius:3px}
   .dots button.on i{animation:fill var(--dur,6s) linear forwards}
   .stage.paused .dots button.on i{animation-play-state:paused}
   @keyframes fill{to{width:100%}}
@@ -154,7 +158,6 @@
   @keyframes grow{from{width:0}}
   .ui-score{display:flex;align-items:center;gap:14px}
   .ring{width:64px;height:64px;border-radius:50%;background:conic-gradient(var(--green) calc(var(--v)*1%),var(--paper-2) 0);display:grid;place-items:center;position:relative}
-  .ring::after{content:attr(data-v);position:absolute;inset:7px;background:#fff;border-radius:50%;display:grid;place-items:center;font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--green)}
 
   /* ---------- sections ---------- */
   section{padding:96px 0}
@@ -250,7 +253,7 @@
   footer{background:#040F0A;color:rgba(255,255,255,.7);padding:56px 0 32px;font-size:14px}
   footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px;margin-bottom:36px}
   footer h5{color:#fff;font-family:var(--font-body);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 12px}
-  footer a{display:block;padding:4px 0;color:rgba(255,255,255,.7)}
+  footer a{display:block;padding:7px 0;color:rgba(255,255,255,.7)}
   footer a:hover{color:#fff}
   footer .fine{border-top:1px solid var(--line-dark);padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:rgba(255,255,255,.5)}
 
@@ -262,20 +265,24 @@
 
   /* responsive */
   @media (max-width:980px){
+    .menu{display:none;position:fixed;top:84px;left:0;right:0;background:#062A1C;flex-direction:column;align-items:stretch;padding:12px 16px 20px;gap:2px;border-top:1px solid var(--line-dark)}
+    .nav.open .menu{display:flex}.menu .btn{margin:10px 0 0;justify-content:center}
+    .burger{display:block}
     .hero .wrap{grid-template-columns:1fr}.stage{height:470px}
+    .hero .wrap > *{min-width:0}
     .products,.grid-2{grid-template-columns:1fr}.grid-3,.modules,.timeline,.tiers,.steps{grid-template-columns:1fr 1fr}.grid-4{grid-template-columns:1fr 1fr}
     footer .cols{grid-template-columns:1fr 1fr}
     .tier.featured{transform:none}
   }
   @media (max-width:640px){
     section{padding:64px 0}.hero{padding:104px 0 56px}
-    .stage{height:470px}.ui-body{padding:12px 14px}.tl span{font-size:10.5px}.tl span em{width:10px}.clock b{font-size:34px}.cap{flex-direction:column;align-items:flex-start;gap:8px;bottom:8px}
-    .hero h1{font-size:38px}.proof{gap:14px 22px}.pill{white-space:normal;line-height:1.35;max-width:100%}.pill .dot{flex:none;margin-top:4px}
+    .stage{height:560px}.show{inset:0 0 88px 0}.cap{min-height:80px}.ui-body{padding:12px 14px}.tl span{font-size:10.5px}.tl span em{width:10px}.clock b{font-size:34px}.cap{flex-direction:column;align-items:flex-start;gap:8px;bottom:8px}
+    .hero h1{font-size:38px}.proof{gap:14px 22px}
+    .btn{white-space:normal;text-align:center}.hero .ctas .btn{width:100%;justify-content:center}
+    .ui-row{grid-template-columns:1.4fr 1fr .9fr;gap:6px;font-size:11.5px}.ui-row>*{min-width:0}
+    .marquee,.hero,.stage{max-width:100%;overflow:hidden}.pill{white-space:normal;line-height:1.35;max-width:100%}.pill .dot{flex:none;margin-top:4px}
     .brand .mark{width:42px;height:42px;border-radius:11px}.brand .mark svg{width:25px;height:25px}.brand .word{font-size:27px}.brand .sub{font-size:10px}
     .grid-3,.modules,.timeline,.tiers,.steps,.grid-4{grid-template-columns:1fr}
-    .menu{display:none;position:fixed;top:84px;left:0;right:0;background:#062A1C;flex-direction:column;align-items:stretch;padding:12px 16px 20px;gap:2px;border-top:1px solid var(--line-dark)}
-    .nav.open .menu{display:flex}.menu .btn{margin:10px 0 0;justify-content:center}
-    .burger{display:block}
     footer .cols{grid-template-columns:1fr}
     .proof{gap:18px}
   }
@@ -295,7 +302,7 @@
   .chips label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:13.5px;cursor:pointer;background:var(--paper);transition:all .15s}
   .chips label:hover{border-color:var(--green)}
   .chips input{accent-color:var(--green);margin:0}
-  .chips label:has(input:checked){background:var(--mint-soft);border-color:var(--green);color:var(--green-deep);font-weight:600}
+  .chips label:has(input:checked),.chips label.on{background:var(--mint-soft);border-color:var(--green);color:var(--green-deep);font-weight:600}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
   .f label{font-size:13px;font-weight:600;color:var(--ink-2)}
@@ -362,7 +369,7 @@
 <section class="light" style="padding:0">
   <div class="wrap lead-grid">
     <div class="formcard">
-      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.</p><a class="btn btn-green" href="index.html">Back to acktvt.com</a></div>
+      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.</p><p class="note">Taking you back to acktvt.com…</p></div>
       <form id="lead" action="https://formsubmit.co/acktvt@prowessz.com" method="POST" novalidate>
         <input type="hidden" name="_subject" value="[acktvt] Business Management Suite enquiry">
         <input type="hidden" name="_template" value="table">
@@ -375,8 +382,8 @@
         <div id="err" class="err"></div>
         <div class="q"><label class="t">What runs the business today?<small>Pick everything that applies.</small></label><div class="chips"><label><input type="checkbox" name="runs_on" value="Tally + Excel"> Tally + Excel</label><label><input type="checkbox" name="runs_on" value="An ERP we have outgrown"> An ERP we have outgrown</label><label><input type="checkbox" name="runs_on" value="Custom / in-house software"> Custom / in-house software</label><label><input type="checkbox" name="runs_on" value="Registers and WhatsApp"> Registers and WhatsApp</label><label><input type="checkbox" name="runs_on" value="Nothing central yet"> Nothing central yet</label></div></div><div class="q"><label class="t">Where does it hurt most?<small>Pick everything that applies.</small></label><div class="chips"><label><input type="checkbox" name="challenges" value="Order status across production"> Order status across production</label><label><input type="checkbox" name="challenges" value="Material planning and stock"> Material planning and stock</label><label><input type="checkbox" name="challenges" value="GST, e-invoice and e-way bills"> GST, e-invoice and e-way bills</label><label><input type="checkbox" name="challenges" value="Receivables and follow-ups"> Receivables and follow-ups</label><label><input type="checkbox" name="challenges" value="Tenders, quotes and CRM"> Tenders, quotes and CRM</label><label><input type="checkbox" name="challenges" value="Quality, lab and TPI records"> Quality, lab and TPI records</label><label><input type="checkbox" name="challenges" value="Retyping between systems"> Retyping between systems</label><label><input type="checkbox" name="challenges" value="HR, attendance and payroll"> HR, attendance and payroll</label></div></div><div class="q"><label class="t">How big is the team?</label><div class="chips"><label><input type="radio" name="size" value="Under 25 people" required> Under 25 people</label><label><input type="radio" name="size" value="25–100"> 25–100</label><label><input type="radio" name="size" value="100–300"> 100–300</label><label><input type="radio" name="size" value="300+"> 300+</label><label><input type="radio" name="size" value="More than one plant"> More than one plant</label></div></div>
         <div class="row">
-          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="Dr Meera Nair"></div>
-          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="Sunrise Hospital / Precision Gears Pvt Ltd"></div>
+          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="Rohan Deshmukh"></div>
+          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="Precision Gears Pvt Ltd / Apex Engineering Works"></div>
         </div>
         <div class="row">
           <div class="f"><label for="email">Work e-mail</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@yourcompany.in"></div>
@@ -403,7 +410,7 @@
   <div class="wrap">
     <div class="cols">
       <div>
-        <a class="brand" href="index.html" style="margin-bottom:12px"><span class="mark"><svg viewBox="0 0 1254 1254" aria-hidden="true"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#fff"><path d="M6423 10309 c-67 -16 -112 -68 -249 -294 -186 -307 -668 -1075 -887 -1415 -472 -732 -739 -1127 -1590 -2355 -608 -876 -1388 -1918 -2046 -2730 -66 -82 -121 -155 -121 -162 0 -34 29 -19 102 53 136 134 575 591 748 779 955 1036 1920 2267 2975 3795 135 196 955 1421 1002 1496 9 16 12 16 16 4 3 -8 38 -175 77 -370 117 -581 320 -1554 490 -2349 205 -956 194 -901 189 -905 -10 -8 -1026 -273 -1306 -341 -690 -166 -1406 -317 -2013 -425 -129 -23 -250 -48 -267 -56 -37 -15 -73 -67 -73 -104 0 -52 33 -85 126 -125 496 -212 1139 -563 1924 -1050 140 -87 386 -238 545 -335 541 -330 1082 -670 1590 -998 149 -96 284 -181 302 -188 52 -22 113 -18 156 11 42 29 77 90 77 136 0 24 -622 3340 -645 3436 -4 19 3 24 58 41 953 306 1954 660 2746 972 623 246 666 264 669 288 2 12 1 22 -2 22 -3 0 -101 -36 -218 -81 -414 -157 -950 -349 -1443 -515 -643 -218 -1828 -584 -1843 -570 -6 7 -3 -13 -223 1156 -264 1403 -466 2431 -570 2910 -34 157 -58 201 -134 242 -60 32 -106 40 -162 27z m1054 -6092 c172 -821 311 -1495 310 -1499 -1 -4 -78 40 -172 99 -506 315 -1875 1126 -2361 1398 -429 241 -645 356 -977 521 -218 109 -293 151 -280 156 10 4 95 23 188 43 761 163 1876 454 2790 728 99 30 182 52 185 50 2 -2 145 -675 317 -1496z"/></g></svg></span><span><span class="word">ac<span class="k">k</span>tvt</span><span class="sub" style="display:block">by Prowessz Consulting</span></span></a>
+        <a class="brand" href="index.html" style="margin-bottom:12px"><span class="mark"><svg viewBox="0 0 1254 1254" aria-hidden="true"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#fff"><path d="M6423 10309 c-67 -16 -112 -68 -249 -294 -186 -307 -668 -1075 -887 -1415 -472 -732 -739 -1127 -1590 -2355 -608 -876 -1388 -1918 -2046 -2730 -66 -82 -121 -155 -121 -162 0 -34 29 -19 102 53 136 134 575 591 748 779 955 1036 1920 2267 2975 3795 135 196 955 1421 1002 1496 9 16 12 16 16 4 3 -8 38 -175 77 -370 117 -581 320 -1554 490 -2349 205 -956 194 -901 189 -905 -10 -8 -1026 -273 -1306 -341 -690 -166 -1406 -317 -2013 -425 -129 -23 -250 -48 -267 -56 -37 -15 -73 -67 -73 -104 0 -52 33 -85 126 -125 496 -212 1139 -563 1924 -1050 140 -87 386 -238 545 -335 541 -330 1082 -670 1590 -998 149 -96 284 -181 302 -188 52 -22 113 -18 156 11 42 29 77 90 77 136 0 24 -622 3340 -645 3436 -4 19 3 24 58 41 953 306 1954 660 2746 972 623 246 666 264 669 288 2 12 1 22 -2 22 -3 0 -101 -36 -218 -81 -414 -157 -950 -349 -1443 -515 -643 -218 -1828 -584 -1843 -570 -6 7 -3 -13 -223 1156 -264 1403 -466 2431 -570 2910 -34 157 -58 201 -134 242 -60 32 -106 40 -162 27z m1054 -6092 c172 -821 311 -1495 310 -1499 -1 -4 -78 40 -172 99 -506 315 -1875 1126 -2361 1398 -429 241 -645 356 -977 521 -218 109 -293 151 -280 156 10 4 95 23 188 43 761 163 1876 454 2790 728 99 30 182 52 185 50 2 -2 145 -675 317 -1496z"/></g></svg></span><span><span class="word">ac<span class="k">k</span>tvt</span><span class="sub" style="display:block">Unlimited opportunity</span><span class="by">by Prowessz Consulting Services LLP</span></span></a>
         <p style="max-width:320px">Business software from a consulting practice that runs it with you first. Built in Mumbai.</p>
       </div>
       <div><h5>Products</h5><a href="index.html#bms">Business Management Suite</a><a href="index.html#dps">Data Protection Suite</a><a href="index.html#tiers">Tiers</a><a href="bms.html">Get started — BMS</a><a href="dps.html">Get started — DPS</a></div>
@@ -419,8 +426,11 @@
   document.getElementById('burger')?.addEventListener('click', () => { const n = document.getElementById('nav'); const open = n.classList.toggle('open'); document.getElementById('burger').setAttribute('aria-expanded', open); });
   const form = document.getElementById('lead'), ok = document.getElementById('ok'), err = document.getElementById('err'), btn = document.getElementById('send');
   const TO = 'acktvt@prowessz.com';
-  form.querySelector('[name=_next]').value = location.href.split('?')[0].split('#')[0] + '?sent=1';
-  if (new URLSearchParams(location.search).get('sent') === '1') { form.style.display = 'none'; ok.style.display = 'block'; }
+  // highlight chosen chips on browsers without :has() (older Firefox/Safari)
+  const paint = () => form.querySelectorAll('.chips label').forEach(l => l.classList.toggle('on', l.querySelector('input').checked));
+  form.addEventListener('change', paint); paint();
+  const HOME = location.origin + location.pathname.replace(/[^/]*$/, '');   // https://acktvt.com/ on the live site
+  form.querySelector('[name=_next]').value = HOME + '?sent=1';
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
@@ -433,6 +443,7 @@
       const j = await r.json().catch(() => ({}));
       if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'Could not send');
       form.style.display = 'none'; ok.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => { location.href = HOME + '?sent=1'; }, 2200);
     } catch (ex) {
       // network or relay hiccup: fall back to the classic POST, which redirects back here with ?sent=1
       btn.disabled = false; btn.textContent = 'Send';
