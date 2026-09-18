@@ -14,12 +14,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 src = open(os.path.join(HERE, 'index.html'), encoding='utf-8').read()
 
 style = re.search(r'<style>.*?</style>', src, re.S).group(0)
-head_meta = re.search(r'<link rel="icon".*?(?=<style>)', src, re.S).group(0)
+head_meta = re.search(r'<link rel="icon".*?(?=<style>)', src, re.S).group(0).replace('href="assets/', 'href="../assets/')
 nav = re.search(r'<header class="nav" id="nav">.*?</header>', src, re.S).group(0)
 footer = re.search(r'<footer>.*?</footer>', src, re.S).group(0)
 # sub-pages live beside index.html: anchor links must go back to it
-nav = re.sub(r'href="#(?!top)', 'href="index.html#', nav).replace('href="#top"', 'href="index.html"')
-footer = re.sub(r'href="#(?!top)', 'href="index.html#', footer).replace('href="#top"', 'href="index.html"')
+def relink(h):
+    h = h.replace('href="./"', 'href="../"').replace('href="#', 'href="../#')
+    return h.replace('href="bms/"', 'href="../bms/"').replace('href="dps/"', 'href="../dps/"').replace('href="privacy/"', 'href="../privacy/"')
+nav, footer = relink(nav), relink(footer)
 nav = nav.replace('class="nav" id="nav"', 'class="nav scrolled" id="nav"')
 
 EXTRA_CSS = """
@@ -86,7 +88,7 @@ FORM_JS = """
   // highlight chosen chips on browsers without :has() (older Firefox/Safari)
   const paint = () => form.querySelectorAll('.chips label').forEach(l => l.classList.toggle('on', l.querySelector('input').checked));
   form.addEventListener('change', paint); paint();
-  const HOME = location.origin + location.pathname.replace(/[^/]*$/, '');   // https://acktvt.com/ on the live site
+  const HOME = new URL(document.querySelector('.brand').getAttribute('href'), location.href).href;   // https://acktvt.com/ on the live site
   form.querySelector('[name=_next]').value = HOME + '?sent=1';
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -162,7 +164,7 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
           <div class="f"><label for="phone">Phone / WhatsApp</label><input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="+91 …"></div>
         </div>
         <div class="f"><label for="comment">Anything else you'd like us to know</label><textarea id="comment" name="comment" placeholder="Optional — a line or two is plenty."></textarea></div>
-        <label class="consent"><input type="checkbox" name="consent" value="yes" required> I agree that Prowessz Consulting may contact me about acktvt using these details. See the <a href="privacy.html" style="text-decoration:underline">privacy notice</a>.</label>
+        <label class="consent"><input type="checkbox" name="consent" value="yes" required> I agree that Prowessz Consulting may contact me about acktvt using these details. See the <a href="../privacy/" style="text-decoration:underline">privacy notice</a>.</label>
         <div class="actions"><button class="btn btn-green" id="send" type="submit">Send</button><span class="note">Goes straight to acktvt@prowessz.com · we reply within one working day.</span></div>
       </form>
     </div>
@@ -174,14 +176,15 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
 </body>
 </html>
 """
-    open(os.path.join(HERE, fname), 'w', encoding='utf-8').write(html)
-    print('wrote', fname, len(html) // 1024, 'KB')
+    os.makedirs(os.path.join(HERE, fname), exist_ok=True)
+    open(os.path.join(HERE, fname, 'index.html'), 'w', encoding='utf-8').write(html)
+    print('wrote', fname + '/index.html', len(html) // 1024, 'KB')
 
 
 WA = 'https://wa.me/918080255000?text=Hi%2C%20I%27m%20interested%20in%20acktvt%20products%2C%20Let%27s%20connect..'
 
 # ---------------------------------------------------------------- DPS
-page('dps.html', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
+page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
      'Tell us where your facility stands. <em style="color:var(--mint)">We\'ll show you the gap.</em>',
      'Three quick questions and your contact details. We reply within one working day with a readiness view for a facility like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.',
      'Start with the Data Protection Suite', 'Takes about a minute. Nothing here is a commitment.',
@@ -208,7 +211,7 @@ page('dps.html', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 202
      'Dr Meera Nair', 'Sunrise Hospital / Lotus Path Lab')
 
 # ---------------------------------------------------------------- BMS
-page('bms.html', 'Business Management Suite', 'Business Management Suite · for growing Indian manufacturers',
+page('bms', 'Business Management Suite', 'Business Management Suite · for growing Indian manufacturers',
      'Tell us how the business runs today. <em style="color:var(--mint)">We\'ll show you what changes.</em>',
      'Three quick questions and your contact details. We reply within one working day with a walkthrough on your own order flow — enquiry to invoice to payment — and a plain answer on what it would take to move.',
      'Get started with the Business Management Suite', 'Takes about a minute. Nothing here is a commitment.',
@@ -270,5 +273,26 @@ priv = f"""<!doctype html>
 </body>
 </html>
 """
-open(os.path.join(HERE, 'privacy.html'), 'w', encoding='utf-8').write(priv)
-print('wrote privacy.html')
+os.makedirs(os.path.join(HERE, 'privacy'), exist_ok=True)
+open(os.path.join(HERE, 'privacy', 'index.html'), 'w', encoding='utf-8').write(priv)
+print('wrote privacy/index.html')
+
+# ---------------------------------------------------------------- 404
+nf = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Page not found · acktvt</title>
+{head_meta.replace('href="../assets/', 'href="/assets/')}{style}{EXTRA_CSS}
+</head>
+<body>
+{nav.replace('href="../', 'href="/')}
+<section class="page" style="min-height:70vh;display:flex;align-items:center"><div class="wrap"><span class="eyebrow" style="color:var(--gold-bright)">404</span><h1>That page isn't here.</h1><p class="dek">The link may be old or mistyped. Everything about both suites is one page away.</p><p style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" href="/">Go to acktvt.com</a><a class="btn btn-ghost" href="/dps/">Data Protection Suite</a><a class="btn btn-ghost" href="/bms/">Business Management Suite</a></p></div></section>
+{footer.replace('href="../', 'href="/')}
+<script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ document.getElementById('nav').classList.toggle('open'); }});</script>
+</body>
+</html>
+"""
+open(os.path.join(HERE, '404.html'), 'w', encoding='utf-8').write(nf)
+print('wrote 404.html')

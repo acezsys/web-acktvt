@@ -37,9 +37,10 @@ Everything is plain HTML — sections are marked with `<!-- ==== NAME ==== -->` 
 | File | What it is |
 |---|---|
 | `index.html` | Landing page (both suites) |
-| `bms.html` | Business Management Suite — enquiry form |
-| `dps.html` | Data Protection Suite — enquiry form |
-| `privacy.html` | Privacy notice for this website |
+| `bms/index.html` | Business Management Suite — enquiry form, served as **acktvt.com/bms/** |
+| `dps/index.html` | Data Protection Suite — enquiry form, served as **acktvt.com/dps/** |
+| `privacy/index.html` | Privacy notice, served as **acktvt.com/privacy/** |
+| `404.html` | Branded not-found page (GitHub Pages serves it automatically) |
 | `build_pages.py` | Regenerates the three sub-pages from `index.html`'s styles, nav and footer. Run `python3 build_pages.py` after changing the nav, footer or colours in `index.html`. |
 
 ## Enquiry forms → acktvt@prowessz.com
@@ -47,7 +48,7 @@ Everything is plain HTML — sections are marked with `<!-- ==== NAME ==== -->` 
 The two forms post to **FormSubmit** (formsubmit.co), a form-to-e-mail relay
 that needs no account and no server. One-time setup:
 
-1. Publish the site, open `dps.html`, fill the form with your own details and
+1. Publish the site, open acktvt.com/dps/, fill the form with your own details and
    press Send.
 2. FormSubmit e-mails **acktvt@prowessz.com** once with an *"Activate form"*
    link. Click it.
@@ -55,7 +56,15 @@ that needs no account and no server. One-time setup:
    answers in a table; the visitor's address is set as Reply-To so you can
    answer directly. The visitor sees a thank-you for two seconds and is then
    returned to the home page (never a FormSubmit page). Do step 1 once more from `bms.html` if the second form's
-   first submission also asks for activation.
+   first submission also asks for activation (open acktvt.com/bms/).
 
 The address is set in two places in `build_pages.py` (`TO` and the form
 `action`) — change both if the inbox ever changes, then rebuild.
+
+## Clean addresses
+
+Pages live in folders (`dps/index.html`) so the address bar shows
+`acktvt.com/dps/` — never a `.html` file name. In-page section links scroll
+without leaving `#section` in the address, and the logo returns to
+`acktvt.com/`. Delete any old `dps.html` / `bms.html` / `privacy.html` from
+the repo if they are still there.
