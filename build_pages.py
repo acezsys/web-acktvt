@@ -1,0 +1,268 @@
+"""Generates bms.html, dps.html and privacy.html from index.html's styles,
+nav and footer so the sub-pages always match the landing page.
+
+    python3 build_pages.py
+
+Form submissions go to acktvt@prowessz.com through FormSubmit
+(https://formsubmit.co) — a no-account relay: the FIRST submission triggers
+a one-time activation e-mail to that inbox; click the link once and every
+later submission is delivered. See README.md.
+"""
+import re, os
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+src = open(os.path.join(HERE, 'index.html'), encoding='utf-8').read()
+
+style = re.search(r'<style>.*?</style>', src, re.S).group(0)
+head_meta = re.search(r'<link rel="icon".*?(?=<style>)', src, re.S).group(0)
+nav = re.search(r'<header class="nav" id="nav">.*?</header>', src, re.S).group(0)
+footer = re.search(r'<footer>.*?</footer>', src, re.S).group(0)
+# sub-pages live beside index.html: anchor links must go back to it
+nav = re.sub(r'href="#(?!top)', 'href="index.html#', nav).replace('href="#top"', 'href="index.html"')
+footer = re.sub(r'href="#(?!top)', 'href="index.html#', footer).replace('href="#top"', 'href="index.html"')
+nav = nav.replace('class="nav" id="nav"', 'class="nav scrolled" id="nav"')
+
+EXTRA_CSS = """
+<style>
+  .page{background:radial-gradient(1000px 500px at 10% -10%,#0E5A3B 0%,transparent 60%),linear-gradient(180deg,#062A1C 0%,#071F16 100%);color:#fff;padding:132px 0 56px}
+  .page h1{font-size:clamp(34px,4.4vw,52px);margin:14px 0 14px}
+  .page .dek{color:rgba(255,255,255,.78)}
+  .lead-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:start;margin-top:-40px;padding-bottom:80px}
+  .formcard{background:#fff;color:var(--ink);border-radius:var(--radius);box-shadow:0 30px 80px rgba(0,0,0,.25),0 0 0 1px var(--line);padding:30px 30px 26px}
+  .formcard h2{font-size:24px;margin-bottom:6px}
+  .formcard .sub{color:var(--ink-soft);font-size:14.5px;margin-bottom:22px}
+  .q{margin-bottom:20px}
+  .q label.t{display:block;font-weight:600;font-size:14.5px;margin-bottom:8px}
+  .q label.t small{display:block;font-weight:400;color:var(--ink-soft);font-size:12.5px;margin-top:2px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:8px 13px;font-size:13.5px;cursor:pointer;background:var(--paper);transition:all .15s}
+  .chips label:hover{border-color:var(--green)}
+  .chips input{accent-color:var(--green);margin:0}
+  .chips label:has(input:checked){background:var(--mint-soft);border-color:var(--green);color:var(--green-deep);font-weight:600}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+  .f label{font-size:13px;font-weight:600;color:var(--ink-2)}
+  .f input,.f textarea{font:inherit;font-size:14.5px;padding:11px 13px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:var(--ink);width:100%}
+  .f input:focus,.f textarea:focus{outline:2px solid var(--mint);border-color:var(--green)}
+  .f textarea{min-height:96px;resize:vertical}
+  .consent{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink-soft);margin:6px 0 18px}
+  .consent input{margin-top:3px;accent-color:var(--green)}
+  .actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .note{font-size:12.5px;color:var(--ink-soft)}
+  .ok{display:none;text-align:center;padding:36px 10px}
+  .ok .tick{width:64px;height:64px;border-radius:50%;background:var(--mint-soft);color:var(--green);display:grid;place-items:center;margin:0 auto 14px;font-size:30px}
+  .ok h2{font-size:26px;margin-bottom:8px}
+  .ok p{color:var(--ink-soft);max-width:44ch;margin:0 auto 18px}
+  .err{display:none;background:#FBE9E7;color:#A3241D;border-radius:var(--radius-sm);padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+  .side{color:#fff;padding-top:0}
+  .side .card{background:linear-gradient(160deg,#0B3D2A,#062A1C);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:22px;margin-bottom:14px;box-shadow:0 18px 50px rgba(0,0,0,.18)}
+  .side h3{font-size:18px;margin-bottom:10px;color:#fff}
+  .side p,.side li{font-size:14.5px;color:rgba(255,255,255,.78);line-height:1.55}
+  .side ul{margin:0;padding-left:18px}
+  .side li{margin:4px 0}
+  .side .mods{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .side .mods span{font-size:12px;background:rgba(255,255,255,.08);border:1px solid var(--line-dark);border-radius:999px;padding:4px 10px;color:rgba(255,255,255,.85)}
+  .side .next{counter-reset:s}
+  .side .next div{display:flex;gap:12px;padding:8px 0;border-top:1px solid var(--line-dark);font-size:14px;color:rgba(255,255,255,.8)}
+  .side .next div:first-child{border:0}
+  .side .next b{counter-increment:s;width:26px;height:26px;border-radius:50%;background:var(--gold);color:var(--ink);display:grid;place-items:center;font-size:12px;flex:none}
+  .side .next b::before{content:counter(s)}
+  .legal{background:#fff;color:var(--ink);padding:80px 0}
+  .legal h1{font-size:40px;margin-bottom:10px}
+  .legal h2{font-size:22px;margin:32px 0 8px}
+  .legal p,.legal li{font-size:15.5px;color:var(--ink-2);line-height:1.65;max-width:76ch}
+  .legal ul{padding-left:20px}
+  @media (max-width:980px){.lead-grid{grid-template-columns:1fr}.side{order:2}}
+  @media (max-width:640px){.formcard{padding:22px 18px}.row{grid-template-columns:1fr}.page{padding-top:112px}}
+</style>
+"""
+
+FORM_JS = """
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('burger')?.addEventListener('click', () => { const n = document.getElementById('nav'); const open = n.classList.toggle('open'); document.getElementById('burger').setAttribute('aria-expanded', open); });
+  const form = document.getElementById('lead'), ok = document.getElementById('ok'), err = document.getElementById('err'), btn = document.getElementById('send');
+  const TO = 'acktvt@prowessz.com';
+  form.querySelector('[name=_next]').value = location.href.split('?')[0].split('#')[0] + '?sent=1';
+  if (new URLSearchParams(location.search).get('sent') === '1') { form.style.display = 'none'; ok.style.display = 'block'; }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    err.style.display = 'none'; btn.disabled = true; btn.textContent = 'Sending…';
+    const fd = new FormData(form); const body = {};
+    for (const [k, v] of fd.entries()) { if (k === '_next') continue; body[k] = body[k] ? body[k] + ', ' + v : v; }
+    body._replyto = body.email;
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/' + TO, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'Could not send');
+      form.style.display = 'none'; ok.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (ex) {
+      // network or relay hiccup: fall back to the classic POST, which redirects back here with ?sent=1
+      btn.disabled = false; btn.textContent = 'Send';
+      err.textContent = 'Sending the long way round — one moment…'; err.style.display = 'block';
+      setTimeout(() => HTMLFormElement.prototype.submit.call(form), 600);
+    }
+  });
+</script>
+"""
+
+
+def chips(name, options, multi=False):
+    t = 'checkbox' if multi else 'radio'
+    return '<div class="chips">' + ''.join(f'<label><input type="{t}" name="{name}" value="{o}"{" required" if (not multi and i == 0) else ""}> {o}</label>' for i, o in enumerate(options)) + '</div>'
+
+
+def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, subject, ok_text):
+    qhtml = ''.join(f'<div class="q"><label class="t">{q}{("<small>" + hint + "</small>") if hint else ""}</label>{chips(name, opts, multi)}</div>' for q, hint, name, opts, multi in questions)
+    html = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title} · acktvt</title>
+<meta name="description" content="{dek}" />
+<meta name="robots" content="index,follow" />
+{head_meta}{style}{EXTRA_CSS}
+</head>
+<body>
+{nav}
+<section class="page">
+  <div class="wrap">
+    <span class="eyebrow" style="color:var(--gold-bright)">{eyebrow}</span>
+    <h1>{h1}</h1>
+    <p class="dek">{dek}</p>
+  </div>
+</section>
+<section class="light" style="padding:0">
+  <div class="wrap lead-grid">
+    <div class="formcard">
+      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>{ok_text}</p><a class="btn btn-green" href="index.html">Back to acktvt.com</a></div>
+      <form id="lead" action="https://formsubmit.co/acktvt@prowessz.com" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="{subject}">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="">
+        <input type="hidden" name="suite" value="{title}">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <h2>{form_title}</h2>
+        <p class="sub">{form_sub}</p>
+        <div id="err" class="err"></div>
+        {qhtml}
+        <div class="row">
+          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="Dr Meera Nair"></div>
+          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="Sunrise Hospital / Precision Gears Pvt Ltd"></div>
+        </div>
+        <div class="row">
+          <div class="f"><label for="email">Work e-mail</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@yourcompany.in"></div>
+          <div class="f"><label for="phone">Phone / WhatsApp</label><input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="+91 …"></div>
+        </div>
+        <div class="f"><label for="comment">Anything else you'd like us to know</label><textarea id="comment" name="comment" placeholder="Optional — a line or two is plenty."></textarea></div>
+        <label class="consent"><input type="checkbox" name="consent" value="yes" required> I agree that Prowessz Consulting may contact me about acktvt using these details. See the <a href="privacy.html" style="text-decoration:underline">privacy notice</a>.</label>
+        <div class="actions"><button class="btn btn-green" id="send" type="submit">Send</button><span class="note">Goes straight to acktvt@prowessz.com · we reply within one working day.</span></div>
+      </form>
+    </div>
+    <aside class="side">{side}</aside>
+  </div>
+</section>
+{footer}
+{FORM_JS}
+</body>
+</html>
+"""
+    open(os.path.join(HERE, fname), 'w', encoding='utf-8').write(html)
+    print('wrote', fname, len(html) // 1024, 'KB')
+
+
+WA = 'https://wa.me/918080255000?text=Hi%2C%20I%27m%20interested%20in%20acktvt%20products%2C%20Let%27s%20connect..'
+
+# ---------------------------------------------------------------- DPS
+page('dps.html', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
+     'Tell us where your facility stands. <em style="color:var(--mint)">We\'ll show you the gap.</em>',
+     'Three quick questions and your contact details. We reply within one working day with a readiness view for a facility like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.',
+     'Start with the Data Protection Suite', 'Takes about a minute. Nothing here is a commitment.',
+     [
+         ('Do you think your facility is DPDP-compliant today — or will be by 13 May 2027?', 'The date the substantive obligations of the Act and Rules come into force.', 'compliance_status',
+          ['Yes, already compliant', 'On track for May 2027', 'Not sure where we stand', 'No plan yet'], False),
+         ('What is the biggest challenge right now?', 'Pick everything that applies.', 'challenges',
+          ['Knowing what patient data we hold and why', 'Notices and consent at the desk', 'Vendors, labs and TPAs — DPAs', 'Breach readiness (72-hour clock)', 'NABH / ABDM requirements', 'Staff awareness and training', 'Proving it to an auditor or the Board'], True),
+         ('Which describes you best?', None, 'facility',
+          ['Hospital, under 50 beds', 'Hospital, 50–200 beds', 'Hospital, 200+ beds', 'Diagnostic lab', 'Clinic or lab chain', 'Consultant / advisor'], False),
+     ],
+     f"""
+      <div class="card"><h3>What happens next</h3><div class="next">
+        <div><b></b><span>We read your answers and reply by e-mail within one working day — a short readiness view for a facility like yours.</span></div>
+        <div><b></b><span>A 20-minute walkthrough on a call or WhatsApp, on your data if you like.</span></div>
+        <div><b></b><span>If it fits, a 14-day trial with sample data loaded — no card, nothing lost when you choose a plan.</span></div>
+      </div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Twenty-three modules across three tiers. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
+        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>Groups</span></div></div>
+      <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
+     """,
+     '[acktvt] Data Protection Suite enquiry',
+     'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.')
+
+# ---------------------------------------------------------------- BMS
+page('bms.html', 'Business Management Suite', 'Business Management Suite · for growing Indian manufacturers',
+     'Tell us how the business runs today. <em style="color:var(--mint)">We\'ll show you what changes.</em>',
+     'Three quick questions and your contact details. We reply within one working day with a walkthrough on your own order flow — enquiry to invoice to payment — and a plain answer on what it would take to move.',
+     'Get started with the Business Management Suite', 'Takes about a minute. Nothing here is a commitment.',
+     [
+         ('What runs the business today?', 'Pick everything that applies.', 'runs_on',
+          ['Tally + Excel', 'An ERP we have outgrown', 'Custom / in-house software', 'Registers and WhatsApp', 'Nothing central yet'], True),
+         ('Where does it hurt most?', 'Pick everything that applies.', 'challenges',
+          ['Order status across production', 'Material planning and stock', 'GST, e-invoice and e-way bills', 'Receivables and follow-ups', 'Tenders, quotes and CRM', 'Quality, lab and TPI records', 'Retyping between systems', 'HR, attendance and payroll'], True),
+         ('How big is the team?', None, 'size',
+          ['Under 25 people', '25–100', '100–300', '300+', 'More than one plant'], False),
+     ],
+     f"""
+      <div class="card"><h3>What happens next</h3><div class="next">
+        <div><b></b><span>We reply by e-mail within one working day with the two or three modules that would change your week first.</span></div>
+        <div><b></b><span>A 30-minute walkthrough on your own order flow — on a call, or at your plant if you are near Mumbai.</span></div>
+        <div><b></b><span>A written scope with what we set up, what your team enters, and when you go live. No retyping, no surprises.</span></div>
+      </div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Nine modules that run a growing company end to end, built around GST and the way Indian manufacturing actually works.</p>
+        <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Dispatch &amp; e-way bills</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span></div></div>
+      <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
+     """,
+     '[acktvt] Business Management Suite enquiry',
+     'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.')
+
+# ---------------------------------------------------------------- privacy
+priv = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy notice · acktvt</title>
+<meta name="description" content="How Prowessz Consulting Services LLP handles personal data collected through acktvt.com." />
+{head_meta}{style}{EXTRA_CSS}
+</head>
+<body>
+{nav}
+<section class="page" style="padding-bottom:40px"><div class="wrap"><span class="eyebrow" style="color:var(--gold-bright)">acktvt.com</span><h1>Privacy notice</h1><p class="dek">What we collect on this website, why, and what you can ask of us. Written the way we ask our clients to write theirs.</p></div></section>
+<section class="legal"><div class="wrap">
+  <p><b>Who we are.</b> acktvt is a product line of Prowessz Consulting Services LLP, Mumbai ("Prowessz", "we"). For the purposes of the Digital Personal Data Protection Act, 2023, Prowessz is the Data Fiduciary for personal data collected through this website.</p>
+  <h2>What we collect and why</h2>
+  <ul>
+    <li><b>Enquiry forms</b> (Data Protection Suite and Business Management Suite pages): your name, organisation, work e-mail, phone number, your answers to the short questions, and anything you write in the comment box. <i>Purpose:</i> to reply to your enquiry, arrange a walkthrough and, if you ask for one, set up a trial. <i>Basis:</i> your consent, given by ticking the box before you send.</li>
+    <li><b>WhatsApp and e-mail</b> you send us: the contents of your message and your contact details, for the same purpose.</li>
+    <li><b>Website visits:</b> this site is a static page hosted on GitHub Pages. We do not set cookies and do not run analytics or advertising trackers. The hosting provider may keep standard server logs (IP address, browser, pages requested) for security and operations.</li>
+  </ul>
+  <h2>Who processes it</h2>
+  <p>Form submissions are relayed to our inbox by FormSubmit (a form-to-e-mail service) and stored in our business e-mail. WhatsApp messages are handled by WhatsApp under its own terms. We do not sell personal data and do not share it with anyone else unless the law requires it.</p>
+  <h2>How long we keep it</h2>
+  <p>Enquiry details are kept for as long as we are talking, and for up to 24 months after the last contact so that we can pick up the conversation if you come back. If you become a client, your details move to our client records under the engagement letter. You can ask us to delete them sooner at any time.</p>
+  <h2>Your rights</h2>
+  <p>You may ask us for a summary of the personal data we hold about you, ask us to correct or erase it, withdraw your consent, or nominate someone to exercise these rights on your behalf. Write to <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a>; we respond within the time the Rules allow and usually much sooner. If you are not satisfied with our response, you may approach the Data Protection Board of India.</p>
+  <h2>Contact</h2>
+  <p>Prowessz Consulting Services LLP, Mumbai · <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> · WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a> · <a href="https://prowessz.com" style="text-decoration:underline">prowessz.com</a>.</p>
+  <p style="margin-top:28px;font-size:13px;color:var(--ink-soft)">Last updated September 2026. Changes are posted on this page.</p>
+</div></section>
+{footer}
+<script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ const n = document.getElementById('nav'); n.classList.toggle('open'); }});</script>
+</body>
+</html>
+"""
+open(os.path.join(HERE, 'privacy.html'), 'w', encoding='utf-8').write(priv)
+print('wrote privacy.html')
