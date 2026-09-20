@@ -185,30 +185,30 @@ WA = 'https://wa.me/918080255000?text=Hi%2C%20I%27m%20interested%20in%20acktvt%2
 
 # ---------------------------------------------------------------- DPS
 page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
-     'Tell us where your facility stands. <em style="color:var(--mint)">We\'ll show you the gap.</em>',
-     'Three quick questions and your contact details. We reply within one working day with a readiness view for a facility like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.',
+     'Tell us where your organisation stands. <em style="color:var(--mint)">We\'ll show you the gap.</em>',
+     'Three quick questions and your contact details. We reply within one working day with a readiness view for an organisation like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.',
      'Start with the Data Protection Suite', 'Takes about a minute. Nothing here is a commitment.',
      [
-         ('Do you think your facility is DPDP-compliant today — or will be by 13 May 2027?', 'The date the substantive obligations of the Act and Rules come into force.', 'compliance_status',
+         ('Do you think your organisation is DPDP-compliant today — or will be by 13 May 2027?', 'The date the substantive obligations of the Act and Rules come into force.', 'compliance_status',
           ['Yes, already compliant', 'On track for May 2027', 'Not sure where we stand', 'No plan yet'], False),
          ('What is the biggest challenge right now?', 'Pick everything that applies.', 'challenges',
-          ['Knowing what patient data we hold and why', 'Notices and consent at the desk', 'Vendors, labs and TPAs — DPAs', 'Breach readiness (72-hour clock)', 'NABH / ABDM requirements', 'Staff awareness and training', 'Proving it to an auditor or the Board'], True),
-         ('Which describes you best?', None, 'facility',
-          ['Hospital, under 50 beds', 'Hospital, 50–200 beds', 'Hospital, 200+ beds', 'Diagnostic lab', 'Clinic or lab chain', 'Consultant / advisor'], False),
+          ['Knowing what personal data we hold and why', 'Notices and consent where we collect data', 'Vendors and processors — DPAs', 'Breach readiness (72-hour clock)', 'Employee, contract-worker and CCTV data', 'NABH / ABDM or ISO 27001 alignment', 'Staff awareness and training', 'Proving it to an auditor or the Board'], True),
+         ('Which describes you best?', None, 'organisation_type',
+          ['Hospital, under 50 beds', 'Hospital, 50–200 beds', 'Hospital, 200+ beds', 'Diagnostic lab or lab chain', 'Manufacturing company', 'Other business', 'Consultant / advisor'], False),
      ],
      f"""
       <div class="card"><h3>What happens next</h3><div class="next">
-        <div><b></b><span>We read your answers and reply by e-mail within one working day — a short readiness view for a facility like yours.</span></div>
+        <div><b></b><span>We read your answers and reply by e-mail within one working day — a short readiness view for an organisation like yours.</span></div>
         <div><b></b><span>A 20-minute walkthrough on a call or WhatsApp, on your data if you like.</span></div>
         <div><b></b><span>If it fits, a 14-day trial with sample data loaded — no card, nothing lost when you choose a plan.</span></div>
       </div></div>
-      <div class="card"><h3>What the suite covers</h3><p>Twenty-three modules across three tiers. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
-        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>Groups</span></div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Twenty-three modules across three tiers, with sector packs for healthcare and manufacturing. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
+        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>NABH / ISO 27001 crosswalk</span><span>Groups</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Data Protection Suite enquiry',
      'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.',
-     'Dr Meera Nair', 'Sunrise Hospital / Lotus Path Lab')
+     'Your full name', 'Hospital, lab or company name')
 
 # ---------------------------------------------------------------- BMS
 page('bms', 'Business Management Suite', 'Business Management Suite · for growing Indian manufacturers',

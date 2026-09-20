@@ -207,6 +207,16 @@
   .tierlabel{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:26px 0 12px}
   .tierlabel i{width:10px;height:10px;border-radius:50%;display:inline-block}
   .t-standard i{background:#157A4A}.t-advanced i{background:#8C96A0}.t-premium i{background:var(--gold)}
+.t-sector i{background:#2F6FB0}
+.sectors{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sector{padding:18px 18px 16px;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.sector h4{font-size:16px;margin:0 0 6px}
+.sector p{color:var(--ink-soft);font-size:13.5px;margin:0 0 10px}
+.sector ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)}
+.sector ul li{margin:3px 0}
+.sector .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.sector.soon .tag{color:#8C96A0}
+@media (max-width:900px){.sectors{grid-template-columns:1fr}}
 
   /* marquee */
   .marquee{overflow:hidden;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);padding:14px 0;background:#062A1C;color:rgba(255,255,255,.75)}
@@ -324,7 +334,7 @@
     <div>
       <span class="pill"><span class="dot"></span> Business Management &amp; Data Protection Suites · by Prowessz Consulting</span>
       <h1>Eleven disconnected tools.<br /><em>Becoming one.</em></h1>
-      <p class="dek">Productivity, connected. Compliance, provable. A Business Management Suite that runs a growing Indian company end to end, and a Data Protection Suite that makes DPDP Act compliance something a hospital or lab can show, not just claim.</p>
+      <p class="dek">Productivity, connected. Compliance, provable. A Business Management Suite that runs a growing Indian company end to end, and a Data Protection Suite that makes DPDP Act compliance something a hospital, lab or manufacturer can show, not just claim.</p>
       <div class="ctas">
         <a class="btn btn-primary btn-spark" href="#dps"><span class="sheen"></span><i class="sp s1"></i><i class="sp s2"></i><i class="sp s3"></i><span class="lbl">Explore Data Protection Suite <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
         <a class="btn btn-primary btn-spark alt" href="#bms"><span class="sheen"></span><i class="sp s1"></i><i class="sp s2"></i><i class="sp s3"></i><span class="lbl">Explore Business Management Suite <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
@@ -403,11 +413,11 @@
           <div class="card-ui">
             <div class="ui-top"><i></i><i></i><i></i> &nbsp;Data Protection Suite · Breach response · Rule 7</div>
             <div class="ui-body">
-              <div class="ui-title">Lab report sent to wrong number <span class="ui-tag crit">72-hr report · 41 h left</span></div>
+              <div class="ui-title">Report e-mailed to the wrong recipient <span class="ui-tag crit">72-hr report · 41 h left</span></div>
               <div class="ui-row" style="border:0;padding:0 0 4px"><span>Board report clock</span><span class="bar"><i style="--w:43%;background:#A3241D"></i></span><span>31 h elapsed</span></div>
               <ul class="steps-ui">
-                <li><span class="tick">✓</span><div>Breach detected &amp; logged<small>IT confirmed · 2 patients affected</small></div></li>
-                <li><span class="tick">✓</span><div>Patients intimated "without delay"<small>Rule 7(1) · SMS + call, 14:20</small></div></li>
+                <li><span class="tick">✓</span><div>Breach detected &amp; logged<small>IT confirmed · 2 people affected</small></div></li>
+                <li><span class="tick">✓</span><div>Affected people told "without delay"<small>Rule 7(1) · SMS + call, 14:20</small></div></li>
                 <li><span class="tick pending">3</span><div>Board notified — full report within 72 h<small>Rule 7(2)(b) · draft ready from this record</small></div></li>
                 <li><span class="tick pending">4</span><div>Remedial measures &amp; recurrence check<small>Rule 6(1)(d)</small></div></li>
                 <li><span class="tick pending">5</span><div>Incident closed &amp; logged for audit<small>Kept in the safeguards review trail</small></div></li>
@@ -462,8 +472,8 @@
         <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>
         <span class="eyebrow" style="color:var(--gold-bright)">Data Protection Suite</span>
         <h3>Make DPDP compliance provable.</h3>
-        <p>Twenty-three modules that turn the Digital Personal Data Protection Act into registers, workflows and evidence a 20–100 bed hospital or diagnostic lab can actually run — with Prowessz consultants in the loop on Premium.</p>
-        <div class="chips"><span class="chip">23 modules · 3 tiers</span><span class="chip">Hosted privacy page</span><span class="chip">Evidence pack</span><span class="chip">14-day trial</span></div>
+        <p>Twenty-three modules that turn the Digital Personal Data Protection Act into registers, workflows and evidence a hospital, diagnostic lab or manufacturing company can actually run — in its own sector's language, with Prowessz consultants in the loop on Premium.</p>
+        <div class="chips"><span class="chip">23 modules · 3 tiers</span><span class="chip">Healthcare &amp; manufacturing packs</span><span class="chip">Hosted privacy page</span><span class="chip">Evidence pack</span><span class="chip">14-day trial</span></div>
         <span class="link">See the modules <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
@@ -520,14 +530,14 @@
   <div class="wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Data Protection Suite</span>
-      <h2>The DPDP Act as registers, workflows and evidence — priced for a 20–100 bed facility.</h2>
-      <p class="dek">Enterprise privacy tools assume a compliance team and an enterprise budget. acktvt gives a small hospital or lab the same substance — with a consultant who has done it before — and lets you try every module on sample data before anyone talks about a contract.</p>
+      <h2>The DPDP Act as registers, workflows and evidence — sized for a mid-sized hospital, lab or plant.</h2>
+      <p class="dek">Enterprise privacy tools assume a compliance team and an enterprise budget. acktvt gives a hospital, a lab or a manufacturer the same substance — with a consultant who has done it before — and lets you try every module on sample data before anyone talks about a contract.</p>
     </div>
 
     <div class="timeline reveal">
       <div class="tl warn"><span class="d">13 NOV 2026</span><b>Consent Manager framework goes live</b><div class="n"><span class="days" data-date="2026-11-13">—</span><small>days from today</small></div><p>Consent and withdrawals arriving through a registered Consent Manager must be honoured. Notices and consent records need to exist before this date.</p><span class="ref">Rule 4 · SDF notifications begin</span></div>
       <div class="tl crit"><span class="d">13 MAY 2027</span><b>Every substantive obligation in force</b><div class="n"><span class="days" data-date="2027-05-13">—</span><small>days from today</small></div><p>Itemised notices, security safeguards, breach intimation, retention, rights timelines and children's-data rules all become enforceable at once.</p><span class="ref">Rules 3, 6–8, 10, 13 · Sections 5–14</span></div>
-      <div class="tl info"><span class="d">THE CLOCKS</span><b>72 hours. 90 days.</b><p>Breach: patients told without delay, full report to the Board within 72 hours. Rights requests and grievances: answered within 90 days — after that, the person may go to the Board.</p><span class="ref">Rule 7 · Sections 11–14 · Rule 14</span></div>
+      <div class="tl info"><span class="d">THE CLOCKS</span><b>72 hours. 90 days.</b><p>Breach: affected people told without delay, full report to the Board within 72 hours. Rights requests and grievances: answered within 90 days — after that, the person may go to the Board.</p><span class="ref">Rule 7 · Sections 11–14 · Rule 14</span></div>
       <div class="tl good"><span class="d">UP TO ₹250 CR</span><b>Penalty per instance</b><p>The maximum for failing reasonable security safeguards. The Board works as a digital office — complaints arrive online, and "did you know?" needs a written answer.</p><span class="ref">Schedule · Section 33</span></div>
     </div>
 
@@ -536,15 +546,15 @@
       <div class="modules">
         <div class="mod"><div><b>Data map &amp; RoPA</b><span>Every processing activity, its purpose, basis and retention</span></div></div>
         <div class="mod"><div><b>Notices</b><span>Itemised notices in English plus any Eighth-Schedule language</span></div></div>
-        <div class="mod"><div><b>Consent ledger</b><span>Consent and withdrawal, provable per patient, per purpose</span></div></div>
+        <div class="mod"><div><b>Consent ledger</b><span>Consent and withdrawal, provable per person, per purpose</span></div></div>
         <div class="mod"><div><b>Rights desk &amp; privacy page</b><span>Access, correction, erasure, nomination on a 90-day clock; hosted request page</span></div></div>
         <div class="mod"><div><b>Vendors &amp; DPAs</b><span>Processor register with DPA status and data location</span></div></div>
         <div class="mod"><div><b>Security safeguards</b><span>The Rule 6 minimums, each with evidence and a date</span></div></div>
         <div class="mod"><div><b>Breach response</b><span>Playbook with the 72-hour Board report drafted from the record</span></div></div>
         <div class="mod"><div><b>Retention &amp; erasure</b><span>Rules per record category and an append-only erasure log</span></div></div>
-        <div class="mod"><div><b>Grievances &amp; parental consent</b><span>90-day grievance SLA; verifiable guardian consent with the clinical exemption</span></div></div>
+        <div class="mod"><div><b>Grievances &amp; parental consent</b><span>90-day grievance SLA; verifiable guardian consent, with Rule 12 exemptions recorded</span></div></div>
         <div class="mod"><div><b>Website &amp; cookie scanner</b><span>Trackers, cookies, forms and the notice on your public site — graded, with a fix for each finding</span></div></div>
-        <div class="mod"><div><b>ABDM readiness</b><span>Join ABDM without breaking DPDP — registries, vendor, milestones and a 14-point checklist</span></div></div>
+        <div class="mod"><div><b>ABDM readiness <small style="font-weight:500;color:var(--ink-soft)">· healthcare</small></b><span>Join ABDM without breaking DPDP — registries, vendor, milestones and a 14-point checklist</span></div></div>
       </div>
       <div class="tierlabel t-advanced"><i></i> Advanced — continuous</div>
       <div class="modules">
@@ -556,15 +566,24 @@
         <div class="mod"><div><b>Champion programme</b><span>The Data Champion's first 90 days, step by step</span></div></div>
         <div class="mod"><div><b>Vendor questionnaires</b><span>18 weighted questions on a no-login link, auto-scored</span></div></div>
         <div class="mod"><div><b>Immutable audit log</b><span>Every change, every export, kept three years</span></div></div>
-        <div class="mod"><div><b>NABH crosswalk</b><span>Your DPDP evidence lined up against the NABH standards — one file for both assessors</span></div></div>
+        <div class="mod"><div><b>Accreditation crosswalk</b><span>Your DPDP evidence lined up against NABH (healthcare) or ISO/IEC 27001 Annex A (manufacturing) — one file for both auditors</span></div></div>
       </div>
       <div class="tierlabel t-premium"><i></i> Premium — assured, with Prowessz in the loop</div>
       <div class="modules">
         <div class="mod"><div><b>DPIA with consultant review</b><span>Structured assessment, scored risk register, mandatory Prowessz review, sign-off, annual re-check</span></div></div>
-        <div class="mod"><div><b>Evidence pack</b><span>One click: every register, the score and the reviews as a dated, printable bundle — no patient names</span></div></div>
+        <div class="mod"><div><b>Evidence pack</b><span>One click: every register, the score and the reviews as a dated, printable bundle — no personal names</span></div></div>
         <div class="mod"><div><b>Regulatory watch</b><span>Curated updates e-mailed on publish, acknowledged with a written trail</span></div></div>
-        <div class="mod"><div><b>Multi-facility groups</b><span>Facility switcher, group dashboard, template registers, consolidated export</span></div></div>
+        <div class="mod"><div><b>Multi-site groups</b><span>Switch between hospitals, labs or plants; group dashboard, template registers, consolidated export</span></div></div>
         <div class="mod"><div><b>Prowessz services</b><span>Outsourced privacy officer, quarterly health-check, breach on-call, annual drill and mock audit</span></div></div>
+      </div>
+      <div class="tierlabel t-sector"><i></i> Sector packs — same suite, your sector's language</div>
+      <div class="sectors">
+        <div class="sector"><span class="tag">Healthcare</span><h4>Hospitals &amp; diagnostic labs</h4><p>Patients, UHIDs, OPD and IPD records, lab reports and TPAs — the registers speak the way a hospital works.</p>
+          <ul><li>NABH crosswalk and ABDM readiness</li><li>Hospital DPIA risks, drills and retention periods</li><li>A sample hospital to explore on day one</li></ul></div>
+        <div class="sector"><span class="tag">Manufacturing</span><h4>Plants &amp; manufacturing companies</h4><p>Employees, contract workers, applicants, visitors, dealers and customers — and the data a plant really holds.</p>
+          <ul><li>ISO/IEC 27001 Annex A crosswalk</li><li>Biometric attendance, CCTV, contract-labour and dealer-KYC risks</li><li>A sample components plant to explore on day one</li></ul></div>
+        <div class="sector soon"><span class="tag">Other sectors</span><h4>Education, finance, retail &amp; more</h4><p>Every module works today with neutral examples and templates; a dedicated pack follows for each sector as clients come on board.</p>
+          <ul><li>Same registers, clocks and evidence</li><li>Prowessz sets your sector when your workspace opens</li></ul></div>
       </div>
     </div>
   </div>
@@ -580,7 +599,7 @@
     </div>
     <div class="grid-4">
       <div class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/></svg></div><h4>Tenant isolation in the database</h4><p>Row-level security on every register; no application code can read across organisations. Verified by 440+ automated checks on every release.</p></div>
-      <div class="card reveal d1"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 015 5v3H7V7a5 5 0 015-5z"/><rect x="4" y="10" width="16" height="11" rx="2"/></svg></div><h4>Sign-in that holds up</h4><p>Two-step verification for administrators, one session per user, password rotation, captcha, and an audit trail of every export.</p></div>
+      <div class="card reveal d1"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 015 5v3H7V7a5 5 0 015-5z"/><rect x="4" y="10" width="16" height="11" rx="2"/></svg></div><h4>Sign-in that holds up</h4><p>Two-step verification for administrators, one session per user, password rotation, captcha, invitations locked to the invited address, and an audit trail of every export.</p></div>
       <div class="card reveal d2"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 9h16M9 4v16"/></svg></div><h4>Your data, in your hands</h4><p>Every register as CSV, the whole workspace as one open JSON file, quarterly backup reminders — and a clean, dated export when you leave.</p></div>
       <div class="card reveal d3"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div><h4>Encrypted, backed up, exportable</h4><p>Encryption in transit and at rest, managed daily backups, and a full export of every register you can take any time — your data never gets locked in.</p></div>
     </div>
@@ -593,25 +612,25 @@
     <div class="section-head reveal">
       <span class="eyebrow">Data Protection Suite tiers</span>
       <h2>Three tiers. Every module in every tier is live today.</h2>
-      <p class="dek">Start on the trial, see what your facility actually needs, and pick the tier with a consultant — the scope and the commercials are settled together in the data-mapping workshop, not on a web page.</p>
+      <p class="dek">Start on the trial, see what your organisation actually needs, and pick the tier with a consultant — the scope and the commercials are settled together in the data-mapping workshop, not on a web page.</p>
     </div>
     <div class="tiers">
       <div class="tier reveal">
         <h3>Standard</h3><p class="for">Compliant — every DPDP obligation met, from day one</p>
-        <ul><li>RoPA register, notices, consent &amp; withdrawal ledger</li><li>Rights desk with a hosted privacy request page</li><li>Vendor/DPA register, retention &amp; erasure log</li><li>Safeguards, breach workflow, 72-hour Board report</li><li>Grievances and parental consent</li><li>Website &amp; cookie scanner, ABDM readiness</li><li>Super Admin + 4 users · 1 facility</li></ul>
-        <div class="price"><b>For a single facility</b><span>meeting its baseline obligations</span></div>
+        <ul><li>RoPA register, notices, consent &amp; withdrawal ledger</li><li>Rights desk with a hosted privacy request page</li><li>Vendor/DPA register, retention &amp; erasure log</li><li>Safeguards, breach workflow, 72-hour Board report</li><li>Grievances and parental consent</li><li>Website &amp; cookie scanner; ABDM readiness for healthcare</li><li>Super Admin + 4 users · 1 site</li></ul>
+        <div class="price"><b>For a single site</b><span>meeting its baseline obligations</span></div>
       </div>
       <div class="tier featured reveal d1">
         <h3>Advanced</h3><p class="for">Continuous — compliance that stays current, not decays</p>
         <div class="plus">Everything in Standard, plus</div>
-        <ul><li>Scored gap assessment with history</li><li>Reviews &amp; reminders with a weekly digest</li><li>Versioned policies and staff training records</li><li>Shadow-IT discovery, Champion programme</li><li>Scored vendor questionnaires, 3-year audit log</li><li>NABH crosswalk</li><li>Up to 15 users · 1 facility</li></ul>
-        <div class="price"><b>Most facilities start here</b><span>compliance that stays current after go-live</span></div>
+        <ul><li>Scored gap assessment with history</li><li>Reviews &amp; reminders with a weekly digest</li><li>Versioned policies and staff training records</li><li>Shadow-IT discovery, Champion programme</li><li>Scored vendor questionnaires, 3-year audit log</li><li>NABH or ISO 27001 crosswalk, by sector</li><li>Up to 15 users · 1 site</li></ul>
+        <div class="price"><b>Most clients start here</b><span>compliance that stays current after go-live</span></div>
       </div>
       <div class="tier reveal d2">
         <h3>Premium</h3><p class="for">Assured — everything, with Prowessz in the loop</p>
         <div class="plus">Everything in Advanced, plus</div>
-        <ul><li>DPIA with mandatory consultant review</li><li>Audit-readiness evidence pack</li><li>Regulatory watch, acknowledged per facility</li><li>Multi-facility group layer</li><li>Privacy officer, health-checks, breach on-call, mock audit</li><li>Unlimited users · multi-facility</li></ul>
-        <div class="price"><b>Groups and assured programmes</b><span>Prowessz consultants in the loop, multi-facility</span></div>
+        <ul><li>DPIA with mandatory consultant review</li><li>Audit-readiness evidence pack</li><li>Regulatory watch for your sector, acknowledged per site</li><li>Multi-site group layer</li><li>Privacy officer, health-checks, breach on-call, mock audit</li><li>Unlimited users · multi-site</li></ul>
+        <div class="price"><b>Groups and assured programmes</b><span>Prowessz consultants in the loop, multi-site</span></div>
       </div>
     </div>
     <div class="reveal" style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;align-items:center">
