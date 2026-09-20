@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Data Protection Suite · acktvt</title>
-<meta name="description" content="Three quick questions and your contact details. We reply within one working day with a readiness view for a facility like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded." />
+<meta name="description" content="Three quick questions and your contact details. We reply within one working day with a readiness view for an organisation like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded." />
 <meta name="robots" content="index,follow" />
 <link rel="icon" type="image/png" sizes="64x64" href="../assets/favicon-64.png" />
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
@@ -203,6 +203,16 @@
   .tierlabel{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:26px 0 12px}
   .tierlabel i{width:10px;height:10px;border-radius:50%;display:inline-block}
   .t-standard i{background:#157A4A}.t-advanced i{background:#8C96A0}.t-premium i{background:var(--gold)}
+.t-sector i{background:#2F6FB0}
+.sectors{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sector{padding:18px 18px 16px;border-radius:12px;background:#fff;border:1px solid var(--line)}
+.sector h4{font-size:16px;margin:0 0 6px}
+.sector p{color:var(--ink-soft);font-size:13.5px;margin:0 0 10px}
+.sector ul{margin:0;padding-left:18px;font-size:13px;color:var(--ink-2)}
+.sector ul li{margin:3px 0}
+.sector .tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+.sector.soon .tag{color:#8C96A0}
+@media (max-width:900px){.sectors{grid-template-columns:1fr}}
 
   /* marquee */
   .marquee{overflow:hidden;border-top:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);padding:14px 0;background:#062A1C;color:rgba(255,255,255,.75)}
@@ -365,8 +375,8 @@
 <section class="page">
   <div class="wrap">
     <span class="eyebrow" style="color:var(--gold-bright)">Data Protection Suite · DPDP Act 2023 · Rules 2025</span>
-    <h1>Tell us where your facility stands. <em style="color:var(--mint)">We'll show you the gap.</em></h1>
-    <p class="dek">Three quick questions and your contact details. We reply within one working day with a readiness view for a facility like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.</p>
+    <h1>Tell us where your organisation stands. <em style="color:var(--mint)">We'll show you the gap.</em></h1>
+    <p class="dek">Three quick questions and your contact details. We reply within one working day with a readiness view for an organisation like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.</p>
   </div>
 </section>
 <section class="light" style="padding:0">
@@ -383,10 +393,10 @@
         <h2>Start with the Data Protection Suite</h2>
         <p class="sub">Takes about a minute. Nothing here is a commitment.</p>
         <div id="err" class="err"></div>
-        <div class="q"><label class="t">Do you think your facility is DPDP-compliant today — or will be by 13 May 2027?<small>The date the substantive obligations of the Act and Rules come into force.</small></label><div class="chips"><label><input type="radio" name="compliance_status" value="Yes, already compliant" required> Yes, already compliant</label><label><input type="radio" name="compliance_status" value="On track for May 2027"> On track for May 2027</label><label><input type="radio" name="compliance_status" value="Not sure where we stand"> Not sure where we stand</label><label><input type="radio" name="compliance_status" value="No plan yet"> No plan yet</label></div></div><div class="q"><label class="t">What is the biggest challenge right now?<small>Pick everything that applies.</small></label><div class="chips"><label><input type="checkbox" name="challenges" value="Knowing what patient data we hold and why"> Knowing what patient data we hold and why</label><label><input type="checkbox" name="challenges" value="Notices and consent at the desk"> Notices and consent at the desk</label><label><input type="checkbox" name="challenges" value="Vendors, labs and TPAs — DPAs"> Vendors, labs and TPAs — DPAs</label><label><input type="checkbox" name="challenges" value="Breach readiness (72-hour clock)"> Breach readiness (72-hour clock)</label><label><input type="checkbox" name="challenges" value="NABH / ABDM requirements"> NABH / ABDM requirements</label><label><input type="checkbox" name="challenges" value="Staff awareness and training"> Staff awareness and training</label><label><input type="checkbox" name="challenges" value="Proving it to an auditor or the Board"> Proving it to an auditor or the Board</label></div></div><div class="q"><label class="t">Which describes you best?</label><div class="chips"><label><input type="radio" name="facility" value="Hospital, under 50 beds" required> Hospital, under 50 beds</label><label><input type="radio" name="facility" value="Hospital, 50–200 beds"> Hospital, 50–200 beds</label><label><input type="radio" name="facility" value="Hospital, 200+ beds"> Hospital, 200+ beds</label><label><input type="radio" name="facility" value="Diagnostic lab"> Diagnostic lab</label><label><input type="radio" name="facility" value="Clinic or lab chain"> Clinic or lab chain</label><label><input type="radio" name="facility" value="Consultant / advisor"> Consultant / advisor</label></div></div>
+        <div class="q"><label class="t">Do you think your organisation is DPDP-compliant today — or will be by 13 May 2027?<small>The date the substantive obligations of the Act and Rules come into force.</small></label><div class="chips"><label><input type="radio" name="compliance_status" value="Yes, already compliant" required> Yes, already compliant</label><label><input type="radio" name="compliance_status" value="On track for May 2027"> On track for May 2027</label><label><input type="radio" name="compliance_status" value="Not sure where we stand"> Not sure where we stand</label><label><input type="radio" name="compliance_status" value="No plan yet"> No plan yet</label></div></div><div class="q"><label class="t">What is the biggest challenge right now?<small>Pick everything that applies.</small></label><div class="chips"><label><input type="checkbox" name="challenges" value="Knowing what personal data we hold and why"> Knowing what personal data we hold and why</label><label><input type="checkbox" name="challenges" value="Notices and consent where we collect data"> Notices and consent where we collect data</label><label><input type="checkbox" name="challenges" value="Vendors and processors — DPAs"> Vendors and processors — DPAs</label><label><input type="checkbox" name="challenges" value="Breach readiness (72-hour clock)"> Breach readiness (72-hour clock)</label><label><input type="checkbox" name="challenges" value="Employee, contract-worker and CCTV data"> Employee, contract-worker and CCTV data</label><label><input type="checkbox" name="challenges" value="NABH / ABDM or ISO 27001 alignment"> NABH / ABDM or ISO 27001 alignment</label><label><input type="checkbox" name="challenges" value="Staff awareness and training"> Staff awareness and training</label><label><input type="checkbox" name="challenges" value="Proving it to an auditor or the Board"> Proving it to an auditor or the Board</label></div></div><div class="q"><label class="t">Which describes you best?</label><div class="chips"><label><input type="radio" name="organisation_type" value="Hospital, under 50 beds" required> Hospital, under 50 beds</label><label><input type="radio" name="organisation_type" value="Hospital, 50–200 beds"> Hospital, 50–200 beds</label><label><input type="radio" name="organisation_type" value="Hospital, 200+ beds"> Hospital, 200+ beds</label><label><input type="radio" name="organisation_type" value="Diagnostic lab or lab chain"> Diagnostic lab or lab chain</label><label><input type="radio" name="organisation_type" value="Manufacturing company"> Manufacturing company</label><label><input type="radio" name="organisation_type" value="Other business"> Other business</label><label><input type="radio" name="organisation_type" value="Consultant / advisor"> Consultant / advisor</label></div></div>
         <div class="row">
-          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="Dr Meera Nair"></div>
-          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="Sunrise Hospital / Lotus Path Lab"></div>
+          <div class="f"><label for="name">Your name</label><input id="name" name="name" required autocomplete="name" placeholder="Your full name"></div>
+          <div class="f"><label for="org">Organisation</label><input id="org" name="organisation" required autocomplete="organization" placeholder="Hospital, lab or company name"></div>
         </div>
         <div class="row">
           <div class="f"><label for="email">Work e-mail</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@yourcompany.in"></div>
@@ -399,12 +409,12 @@
     </div>
     <aside class="side">
       <div class="card"><h3>What happens next</h3><div class="next">
-        <div><b></b><span>We read your answers and reply by e-mail within one working day — a short readiness view for a facility like yours.</span></div>
+        <div><b></b><span>We read your answers and reply by e-mail within one working day — a short readiness view for an organisation like yours.</span></div>
         <div><b></b><span>A 20-minute walkthrough on a call or WhatsApp, on your data if you like.</span></div>
         <div><b></b><span>If it fits, a 14-day trial with sample data loaded — no card, nothing lost when you choose a plan.</span></div>
       </div></div>
-      <div class="card"><h3>What the suite covers</h3><p>Twenty-three modules across three tiers. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
-        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>Groups</span></div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Twenty-three modules across three tiers, with sector packs for healthcare and manufacturing. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
+        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>NABH / ISO 27001 crosswalk</span><span>Groups</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="https://wa.me/918080255000?text=Hi%2C%20I%27m%20interested%20in%20acktvt%20products%2C%20Let%27s%20connect.." target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      </aside>
   </div>
