@@ -184,6 +184,15 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
 
 WA = 'https://wa.me/918080255000?text=Hi%2C%20I%27m%20interested%20in%20acktvt%20products%2C%20Let%27s%20connect..'
 
+# The launcher (acktvt-launch repo) that wakes the Render service and forwards
+# once it answers. Sign-in links go through it so the client sees a branded
+# page for those 30–50 seconds instead of a blank tab. The real product
+# addresses live in that page's CONFIG block, in one place.
+LAUNCH     = 'https://acktvt.prowessz.com/'
+LAUNCH_DPS = LAUNCH + '?app=dps'
+LAUNCH_BMS = LAUNCH + '?app=bms'
+LAUNCH_TRIAL = LAUNCH + '?app=dps&next=/signup'
+
 # ---------------------------------------------------------------- DPS
 page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
      'Tell us where your organisation stands. <em style="color:var(--mint)">We\'ll show you the gap.</em>',
@@ -321,14 +330,14 @@ portal_html = f"""<!doctype html>
       <span class="eyebrow">Data Protection Suite</span>
       <h2>DPDP compliance workspace</h2>
       <p>Registers, notices, consent, rights, breach, evidence packs — for your Data Champion and team.</p>
-      <a class="btn btn-green" id="portal-dps" href="https://dps.acktvt.com/login" target="_blank" rel="noopener">Client login — Data Protection Suite →</a>
+      <a class="btn btn-green" id="portal-dps" href="{LAUNCH_DPS}" target="_blank" rel="noopener">Client login — Data Protection Suite →</a>
       <div class="fine">Invited by a colleague? Use the link in your invitation e-mail; it works for that address only.</div>
     </div>
     <div class="pcard">
       <span class="eyebrow">Business Management Suite</span>
       <h2>Orders to cash workspace</h2>
       <p>Tenders, sales, purchase, stores, production, quality, dispatch and accounts on one traceability spine.</p>
-      <a class="btn btn-primary" href="https://erp.acktvt.com" target="_blank" rel="noopener">Client login — Business Management →</a>
+      <a class="btn btn-primary" href="{LAUNCH_BMS}" target="_blank" rel="noopener">Client login — Business Management →</a>
       <div class="fine">Same login your team uses on the shop floor and on the Android app.</div>
     </div>
   </div>
@@ -338,7 +347,7 @@ portal_html = f"""<!doctype html>
       <p>Start a 14-day trial of the Data Protection Suite with sample data loaded — no card, nothing lost when you choose a plan. Or have us walk you through it first.</p>
     </div>
     <div class="acts">
-      <a class="btn btn-green" id="portal-trial" href="https://dps.acktvt.com/signup" target="_blank" rel="noopener">Sign up for a free trial</a>
+      <a class="btn btn-green" id="portal-trial" href="{LAUNCH_TRIAL}" target="_blank" rel="noopener">Sign up for a free trial</a>
       <a class="btn btn-outline" href="dps/">Ask for a demo</a>
     </div>
   </div>
