@@ -27,6 +27,11 @@ const LINKS = {
 
 The Business Management Suite links to `https://erp.acktvt.com` directly.
 
+The **Client login** button in the header and the footer's *Client portal* link both
+point at `login/`. That page carries the two product sign-in links (`dps.acktvt.com`,
+`erp.acktvt.com`) and the trial / demo buttons — change the addresses there when the
+apps move to their own subdomains.
+
 ## Editing
 
 Everything is plain HTML — sections are marked with `<!-- ==== NAME ==== -->` comments. Tier descriptions sit in the `#tiers` section (no prices — commercials are settled in the workshop); module lists in `#bms` and `#dps`. No build step.
@@ -40,6 +45,7 @@ Everything is plain HTML — sections are marked with `<!-- ==== NAME ==== -->` 
 | `bms/index.html` | Business Management Suite — enquiry form, served as **acktvt.com/bms/** |
 | `dps/index.html` | Data Protection Suite — enquiry form, served as **acktvt.com/dps/** |
 | `privacy/index.html` | Privacy notice, served as **acktvt.com/privacy/** |
+| `login/index.html` | Client portal — the sign-in chooser, served as **acktvt.com/login/**. Links out to each product's own sign-in page; no password is ever typed on this site |
 | `404.html` | Branded not-found page (GitHub Pages serves it automatically) |
 | `build_pages.py` | Regenerates the three sub-pages from `index.html`'s styles, nav and footer. Run `python3 build_pages.py` after changing the nav, footer or colours in `index.html`. |
 

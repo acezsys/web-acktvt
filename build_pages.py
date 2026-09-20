@@ -20,7 +20,8 @@ footer = re.search(r'<footer>.*?</footer>', src, re.S).group(0)
 # sub-pages live beside index.html: anchor links must go back to it
 def relink(h):
     h = h.replace('href="./"', 'href="../"').replace('href="#', 'href="../#')
-    return h.replace('href="bms/"', 'href="../bms/"').replace('href="dps/"', 'href="../dps/"').replace('href="privacy/"', 'href="../privacy/"')
+    return (h.replace('href="bms/"', 'href="../bms/"').replace('href="dps/"', 'href="../dps/"')
+             .replace('href="privacy/"', 'href="../privacy/"').replace('href="login/"', 'href="../login/"'))
 nav, footer = relink(nav), relink(footer)
 nav = nav.replace('class="nav" id="nav"', 'class="nav scrolled" id="nav"')
 
@@ -276,6 +277,84 @@ priv = f"""<!doctype html>
 os.makedirs(os.path.join(HERE, 'privacy'), exist_ok=True)
 open(os.path.join(HERE, 'privacy', 'index.html'), 'w', encoding='utf-8').write(priv)
 print('wrote privacy/index.html')
+
+# ---------------------------------------------------------------- client portal (login chooser)
+PORTAL_CSS = """
+<style>
+  .portal{max-width:980px;margin:0 auto;padding:0 32px 70px}
+  .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:-30px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px 28px 24px;box-shadow:0 24px 60px rgba(6,42,28,.10);display:flex;flex-direction:column}
+  .pcard .eyebrow{color:var(--green);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+  .pcard h2{font-size:22px;margin:8px 0 8px}
+  .pcard p{color:var(--ink-soft);font-size:14px;line-height:1.55;margin:0 0 18px}
+  .pcard .btn{align-self:flex-start}
+  .pcard .fine{font-size:12.5px;color:var(--ink-faint);margin-top:14px}
+  .pnew{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:26px 28px;margin-top:18px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+  .pnew h3{font-size:18px;margin:0 0 4px}
+  .pnew p{color:var(--ink-soft);font-size:13.5px;margin:0;max-width:56ch}
+  .pnew .acts{display:flex;gap:10px;flex-wrap:wrap}
+  .psafe{font-size:12.5px;color:var(--ink-soft);margin-top:22px;text-align:center;line-height:1.6}
+  @media (max-width:860px){.pgrid{grid-template-columns:1fr}.portal{padding:0 20px 56px}}
+</style>
+"""
+
+portal_html = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Client login · acktvt</title>
+<meta name="description" content="Sign in to your acktvt workspace — Data Protection Suite or Business Management Suite — or start a 14-day trial." />
+<meta name="robots" content="index,follow" />
+{head_meta}{style}{EXTRA_CSS}{PORTAL_CSS}
+</head>
+<body>
+{nav}
+<section class="page" style="padding-bottom:64px"><div class="wrap">
+  <span class="eyebrow" style="color:var(--gold-bright)">Client portal</span>
+  <h1>Sign in to your workspace.</h1>
+  <p class="dek">Your workspace opens on its own secure address. We never ask for your password on this website — if a page on acktvt.com ever does, it is not us.</p>
+</div></section>
+<section class="light" style="padding:0"><div class="portal">
+  <div class="pgrid">
+    <div class="pcard">
+      <span class="eyebrow">Data Protection Suite</span>
+      <h2>DPDP compliance workspace</h2>
+      <p>Registers, notices, consent, rights, breach, evidence packs — for your Data Champion and team.</p>
+      <a class="btn btn-green" id="portal-dps" href="https://dps.acktvt.com/login" target="_blank" rel="noopener">Client login — Data Protection Suite →</a>
+      <div class="fine">Invited by a colleague? Use the link in your invitation e-mail; it works for that address only.</div>
+    </div>
+    <div class="pcard">
+      <span class="eyebrow">Business Management Suite</span>
+      <h2>Orders to cash workspace</h2>
+      <p>Tenders, sales, purchase, stores, production, quality, dispatch and accounts on one traceability spine.</p>
+      <a class="btn btn-primary" href="https://erp.acktvt.com" target="_blank" rel="noopener">Client login — Business Management →</a>
+      <div class="fine">Same login your team uses on the shop floor and on the Android app.</div>
+    </div>
+  </div>
+  <div class="pnew">
+    <div>
+      <h3>Not a client yet?</h3>
+      <p>Start a 14-day trial of the Data Protection Suite with sample data loaded — no card, nothing lost when you choose a plan. Or have us walk you through it first.</p>
+    </div>
+    <div class="acts">
+      <a class="btn btn-green" id="portal-trial" href="https://dps.acktvt.com/signup" target="_blank" rel="noopener">Sign up for a free trial</a>
+      <a class="btn btn-outline" href="dps/">Ask for a demo</a>
+    </div>
+  </div>
+  <p class="psafe">
+    Signing in happens on the product's own address over an encrypted connection. Administrators can turn on two-step verification inside the app.<br>
+    Trouble signing in? Write to <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> or WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a>.
+  </p>
+</div></section>
+{footer}
+<script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ const n = document.getElementById('nav'); n.classList.toggle('open'); }});</script>
+</body>
+</html>
+"""
+os.makedirs(os.path.join(HERE, 'login'), exist_ok=True)
+open(os.path.join(HERE, 'login', 'index.html'), 'w', encoding='utf-8').write(portal_html)
+print('wrote login/index.html')
 
 # ---------------------------------------------------------------- 404
 nf = f"""<!doctype html>
