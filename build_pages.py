@@ -380,7 +380,7 @@ portal_html = f"""<!doctype html>
     </div>
     <div class="acts">
       <a class="btn btn-green" id="portal-trial" href="{LAUNCH_TRIAL}" target="_blank" rel="noopener">Start a free trial — DPS</a>
-      <a class="btn btn-outline" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo — BMS</a>
+      <a class="btn btn-primary" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo — BMS</a>
     </div>
   </div>
   <p class="psafe">
