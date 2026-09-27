@@ -103,7 +103,10 @@ FORM_JS = """
       const j = await r.json().catch(() => ({}));
       if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'Could not send');
       form.style.display = 'none'; ok.style.display = 'block'; window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => { location.href = HOME + '?sent=1'; }, 2200);
+      // Pages that offer something to do next (the live demo) keep the visitor
+      // here instead of bouncing them back to the landing page.
+      if (ok.querySelector('[data-stay]')) { document.getElementById('redirnote')?.remove(); }
+      else { setTimeout(() => { location.href = HOME + '?sent=1'; }, 2200); }
     } catch (ex) {
       // network or relay hiccup: fall back to the classic POST, which redirects back here with ?sent=1
       btn.disabled = false; btn.textContent = 'Send';
@@ -120,7 +123,8 @@ def chips(name, options, multi=False):
     return '<div class="chips">' + ''.join(f'<label><input type="{t}" name="{name}" value="{o}"{" required" if (not multi and i == 0) else ""}> {o}</label>' for i, o in enumerate(options)) + '</div>'
 
 
-def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, subject, ok_text, name_ph, org_ph):
+def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, subject, ok_text, name_ph, org_ph,
+         autoresponse='', hero_extra='', ok_extra=''):
     qhtml = ''.join(f'<div class="q"><label class="t">{q}{("<small>" + hint + "</small>") if hint else ""}</label>{chips(name, opts, multi)}</div>' for q, hint, name, opts, multi in questions)
     html = f"""<!doctype html>
 <html lang="en">
@@ -138,18 +142,19 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
   <div class="wrap">
     <span class="eyebrow" style="color:var(--gold-bright)">{eyebrow}</span>
     <h1>{h1}</h1>
-    <p class="dek">{dek}</p>
+    <p class="dek">{dek}</p>{hero_extra}
   </div>
 </section>
 <section class="light" style="padding:0">
   <div class="wrap lead-grid">
     <div class="formcard">
-      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>{ok_text}</p><p class="note">Taking you back to acktvt.com…</p></div>
+      <div id="ok" class="ok"><div class="tick">✓</div><h2>Thank you — we have it.</h2><p>{ok_text}</p>{ok_extra}<p class="note" id="redirnote">Taking you back to acktvt.com…</p></div>
       <form id="lead" action="https://formsubmit.co/acktvt@prowessz.com" method="POST" novalidate>
         <input type="hidden" name="_subject" value="{subject}">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="_next" value="">
+        <input type="hidden" name="_autoresponse" value="{autoresponse}">
         <input type="hidden" name="suite" value="{title}">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <h2>{form_title}</h2>
@@ -193,6 +198,13 @@ LAUNCH_DPS = LAUNCH + '?app=dps'
 LAUNCH_BMS = LAUNCH + '?app=bms'
 LAUNCH_TRIAL = LAUNCH + '?app=dps&next=/signup'
 
+# The Business Management Suite demo — a real deployment loaded with a sample
+# company, open to anyone. It is deliberately NOT behind the enquiry form:
+# a prospect who has seen the screens is a far better conversation than one
+# who bounced off a form, and the form still catches everyone who wants a
+# walkthrough. The auto-reply below sends the same link to whoever does fill it.
+DEMO_BMS = 'https://demo.acktvt.com/'
+
 # ---------------------------------------------------------------- DPS
 page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
      'Tell us where your organisation stands. <em style="color:var(--mint)">We\'ll show you the gap.</em>',
@@ -218,7 +230,13 @@ page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · 
      """,
      '[acktvt] Data Protection Suite enquiry',
      'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.',
-     'Your full name', 'Hospital, lab or company name')
+     'Your full name', 'Hospital, lab or company name',
+     autoresponse=('Thank you for writing to us about the acktvt Data Protection Suite.\n\n'
+                   'We have your answers and will reply within one working day with a short readiness view for an organisation like yours, '
+                   'and a slot for a 20-minute walkthrough on a call or WhatsApp.\n\n'
+                   'If it fits, we will set up a 14-day trial with sample data loaded for your sector — no card, and nothing you enter is lost when you choose a plan.\n\n'
+                   'Anything urgent: reply to this e-mail or WhatsApp +91 80802 55000.\n\n'
+                   'Prowessz Consulting Services LLP\nacktvt.com'))
 
 # ---------------------------------------------------------------- BMS
 page('bms', 'Business Management Suite', 'Business Management Suite · for growing Indian manufacturers',
@@ -239,13 +257,27 @@ page('bms', 'Business Management Suite', 'Business Management Suite · for growi
         <div><b></b><span>A 30-minute walkthrough on your own order flow — on a call, or at your plant if you are near Mumbai.</span></div>
         <div><b></b><span>A written scope with what we set up, what your team enters, and when you go live. No retyping, no surprises.</span></div>
       </div></div>
+      <div class="card"><h3>Want to look around first?</h3><p>The live demo is a real deployment loaded with a sample company — orders, production, stores, dispatch and the dashboard, all populated. Open it, click anything; nothing you do there affects a real business.</p>
+        <p style="margin-top:12px"><a class="btn btn-green" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo →</a></p></div>
       <div class="card"><h3>What the suite covers</h3><p>Nine modules that run a growing company end to end, built around GST and the way Indian manufacturing actually works.</p>
         <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Dispatch &amp; e-way bills</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Business Management Suite enquiry',
      'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.',
-     'Rohan Deshmukh', 'Precision Gears Pvt Ltd / Apex Engineering Works')
+     'Rohan Deshmukh', 'Precision Gears Pvt Ltd / Apex Engineering Works',
+     autoresponse=('Thank you for writing to us about the acktvt Business Management Suite.\n\n'
+                   'We have your details and will reply within one working day with the two or three modules that would change your week first, and a slot for a 30-minute walkthrough on your own order flow.\n\n'
+                   'In the meantime, the live demo is open — a real deployment loaded with a sample company, so you can see orders, production, stores, dispatch and the dashboard before we speak:\n\n'
+                   + DEMO_BMS + '\n\n'
+                   'Anything urgent: reply to this e-mail or WhatsApp +91 80802 55000.\n\n'
+                   'Prowessz Consulting Services LLP\nacktvt.com'),
+     hero_extra=('<p style="margin-top:22px"><a class="btn btn-ghost" href="' + DEMO_BMS + '" target="_blank" rel="noopener">'
+                 'Open the live demo →</a> <span style="font-size:13.5px;color:rgba(255,255,255,.7);margin-left:8px">'
+                 'A real deployment with a sample company loaded. No sign-up.</span></p>'),
+     ok_extra=('<p data-stay style="margin-top:16px"><a class="btn btn-green" href="' + DEMO_BMS + '" target="_blank" rel="noopener">'
+               'Open the live demo →</a></p>'
+               '<p class="note">The same link is in the e-mail we just sent you, so you can come back to it any time.</p>'))
 
 # ---------------------------------------------------------------- privacy
 priv = f"""<!doctype html>
@@ -321,8 +353,8 @@ portal_html = f"""<!doctype html>
 {nav}
 <section class="page" style="padding-bottom:64px"><div class="wrap">
   <span class="eyebrow" style="color:var(--gold-bright)">Client portal</span>
-  <h1>Sign in to your workspace.</h1>
-  <p class="dek">Your workspace opens on its own secure address. We never ask for your password on this website — if a page on acktvt.com ever does, it is not us.</p>
+  <h1>Welcome back. Let's get you in.</h1>
+  <p class="dek">This is the front door to both suites. Pick yours and we'll take you straight to your workspace, where you sign in on its own encrypted address — the one place your password belongs.</p>
 </div></section>
 <section class="light" style="padding:0"><div class="portal">
   <div class="pgrid">
@@ -344,16 +376,16 @@ portal_html = f"""<!doctype html>
   <div class="pnew">
     <div>
       <h3>Not a client yet?</h3>
-      <p>Start a 14-day trial of the Data Protection Suite with sample data loaded — no card, nothing lost when you choose a plan. Or have us walk you through it first.</p>
+      <p>Start a 14-day trial of the Data Protection Suite with sample data loaded — no card, nothing lost when you choose a plan. Or open the Business Management Suite demo and look around a real deployment first.</p>
     </div>
     <div class="acts">
-      <a class="btn btn-green" id="portal-trial" href="{LAUNCH_TRIAL}" target="_blank" rel="noopener">Sign up for a free trial</a>
-      <a class="btn btn-outline" href="dps/">Ask for a demo</a>
+      <a class="btn btn-green" id="portal-trial" href="{LAUNCH_TRIAL}" target="_blank" rel="noopener">Start a free trial — DPS</a>
+      <a class="btn btn-outline" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo — BMS</a>
     </div>
   </div>
   <p class="psafe">
-    Signing in happens on the product's own address over an encrypted connection. Administrators can turn on two-step verification inside the app.<br>
-    Trouble signing in? Write to <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> or WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a>.
+    We keep your sign-in on your suite's own encrypted address, so your password never passes through this page — that is how we have built it, and it is how we will keep it. Your administrator can switch on two-step verification inside the app whenever you want it.<br>
+    Stuck at the door, or something on screen doesn't look right? Tell us and we'll sort it out the same day — <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> or WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a>. You are our client on every acktvt page, not only inside the app.
   </p>
 </div></section>
 {footer}
