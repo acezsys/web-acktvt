@@ -203,7 +203,7 @@ LAUNCH_TRIAL = LAUNCH + '?app=dps&next=/signup'
 # a prospect who has seen the screens is a far better conversation than one
 # who bounced off a form, and the form still catches everyone who wants a
 # walkthrough. The auto-reply below sends the same link to whoever does fill it.
-DEMO_BMS = 'https://demo.acktvt.com/'
+DEMO_BMS = LAUNCH + '?app=demo'
 
 # ---------------------------------------------------------------- DPS
 page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · Rules 2025',
@@ -258,7 +258,7 @@ page('bms', 'Business Management Suite', 'Business Management Suite · for growi
         <div><b></b><span>A written scope with what we set up, what your team enters, and when you go live. No retyping, no surprises.</span></div>
       </div></div>
       <div class="card"><h3>Want to look around first?</h3><p>The live demo is a real deployment loaded with a sample company — orders, production, stores, dispatch and the dashboard, all populated. Open it, click anything; nothing you do there affects a real business.</p>
-        <p style="margin-top:12px"><a class="btn btn-green" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo →</a></p></div>
+        <p style="margin-top:12px"><a class="btn btn-primary" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo →</a></p></div>
       <div class="card"><h3>What the suite covers</h3><p>Nine modules that run a growing company end to end, built around GST and the way Indian manufacturing actually works.</p>
         <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Dispatch &amp; e-way bills</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
@@ -272,10 +272,10 @@ page('bms', 'Business Management Suite', 'Business Management Suite · for growi
                    + DEMO_BMS + '\n\n'
                    'Anything urgent: reply to this e-mail or WhatsApp +91 80802 55000.\n\n'
                    'Prowessz Consulting Services LLP\nacktvt.com'),
-     hero_extra=('<p style="margin-top:22px"><a class="btn btn-ghost" href="' + DEMO_BMS + '" target="_blank" rel="noopener">'
+     hero_extra=('<p style="margin-top:22px"><a class="btn btn-primary" href="' + DEMO_BMS + '" target="_blank" rel="noopener">'
                  'Open the live demo →</a> <span style="font-size:13.5px;color:rgba(255,255,255,.7);margin-left:8px">'
                  'A real deployment with a sample company loaded. No sign-up.</span></p>'),
-     ok_extra=('<p data-stay style="margin-top:16px"><a class="btn btn-green" href="' + DEMO_BMS + '" target="_blank" rel="noopener">'
+     ok_extra=('<p data-stay style="margin-top:16px"><a class="btn btn-primary" href="' + DEMO_BMS + '" target="_blank" rel="noopener">'
                'Open the live demo →</a></p>'
                '<p class="note">The same link is in the e-mail we just sent you, so you can come back to it any time.</p>'))
 
