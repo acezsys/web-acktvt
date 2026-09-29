@@ -25,11 +25,11 @@ const LINKS = {
 };
 ```
 
-The Business Management Suite links to `https://erp.acktvt.com` directly.
+The Business Management Suite links to `https://bms.acktvt.com` directly.
 
 The **Client login** button in the header and the footer's *Client portal* link both
 point at `login/`. That page carries the two product sign-in links (`dps.acktvt.com`,
-`erp.acktvt.com`) and the trial / demo buttons — change the addresses there when the
+`bms.acktvt.com`) and the trial / demo buttons — change the addresses there when the
 apps move to their own subdomains.
 
 ## Editing
