@@ -216,7 +216,7 @@ page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · 
          ('What is the biggest challenge right now?', 'Pick everything that applies.', 'challenges',
           ['Knowing what personal data we hold and why', 'Notices and consent where we collect data', 'Vendors and processors — DPAs', 'Breach readiness (72-hour clock)', 'Employee, contract-worker and CCTV data', 'Leads, telemarketing and channel partners', 'NABH / ABDM or ISO 27001 alignment', 'Staff awareness and training', 'Proving it to an auditor or the Board'], True),
          ('Which describes you best?', None, 'organisation_type',
-          ['Hospital, under 50 beds', 'Hospital, 50–200 beds', 'Hospital, 200+ beds', 'Diagnostic lab or lab chain', 'Manufacturing company', 'Real estate developer', 'Other business', 'Consultant / advisor'], False),
+          ['Hospital, under 50 beds', 'Hospital, 50–200 beds', 'Hospital, 200+ beds', 'Diagnostic lab or lab chain', 'Manufacturing company', 'Real estate developer', 'School or college', 'Coaching institute', 'Consultant / advisor'], False),
      ],
      f"""
       <div class="card"><h3>What happens next</h3><div class="next">
@@ -224,13 +224,13 @@ page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · 
         <div><b></b><span>A 20-minute walkthrough on a call or WhatsApp, on your data if you like.</span></div>
         <div><b></b><span>If it fits, a 14-day trial with sample data loaded — no card, nothing lost when you choose a plan.</span></div>
       </div></div>
-      <div class="card"><h3>What the suite covers</h3><p>Twenty-four modules across three tiers, with sector packs for healthcare, manufacturing and real estate. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
-        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>NABH / ISO 27001 crosswalk</span><span>Groups</span></div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Twenty-eight modules across three tiers, with sector packs for healthcare, manufacturing, real estate and education. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
+        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Child-data register</span><span>Lead / enquiry-consent log</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>NABH / ISO 27001 crosswalk</span><span>Groups</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Data Protection Suite enquiry',
      'Your details are on their way to acktvt@prowessz.com. Expect a reply within one working day; if it is urgent, WhatsApp +91 80802 55000.',
-     'Your full name', 'Hospital, lab or company name',
+     'Your full name', 'Hospital, lab, company or institution name',
      autoresponse=('Thank you for writing to us about the acktvt Data Protection Suite.\n\n'
                    'We have your answers and will reply within one working day with a short readiness view for an organisation like yours, '
                    'and a slot for a 20-minute walkthrough on a call or WhatsApp.\n\n'
