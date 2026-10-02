@@ -211,8 +211,8 @@ page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · 
      'Three quick questions and your contact details. We reply within one working day with a readiness view for an organisation like yours, a walkthrough slot, and — if you want it — a 14-day trial with sample data loaded.',
      'Start with the Data Protection Suite', 'Takes about a minute. Nothing here is a commitment.',
      [
-         ('Do you think your organisation is DPDP-compliant today — or will be by 13 May 2027?', 'The date the substantive obligations of the Act and Rules come into force.', 'compliance_status',
-          ['Yes, already compliant', 'On track for May 2027', 'Not sure where we stand', 'No plan yet'], False),
+         ('Where does your organisation stand on DPDP compliance today?', 'The substantive obligations of the Act and Rules apply in full from 13 May 2027; the registers behind them take months to build.', 'compliance_status',
+          ['Already compliant', 'On track, work in progress', 'Not sure where we stand', 'No plan yet'], False),
          ('What is the biggest challenge right now?', 'Pick everything that applies.', 'challenges',
           ['Knowing what personal data we hold and why', 'Notices and consent where we collect data', 'Vendors and processors — DPAs', 'Breach readiness (72-hour clock)', 'Employee, contract-worker and CCTV data', 'Leads, telemarketing and channel partners', 'NABH / ABDM or ISO 27001 alignment', 'Staff awareness and training', 'Proving it to an auditor or the Board'], True),
          ('Which describes you best?', None, 'organisation_type',

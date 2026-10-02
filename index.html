@@ -151,6 +151,8 @@
   .clock b{display:block;font-family:var(--font-head);font-size:44px;font-weight:600;color:var(--gold-bright);line-height:1.05;margin-top:6px}
   .clock b span{font-family:var(--font-body);font-size:14px;color:#fff;font-weight:500;margin-left:6px}
   .clock p{font-size:12px;color:rgba(255,255,255,.8);margin-top:6px;line-height:1.4}
+  .clock div.done b{color:var(--mint);font-size:30px}.clock div.done b span{display:block;margin:4px 0 0}
+  .tl.done .n{color:var(--green);font-size:26px}.tl.done .n small{display:block;margin:2px 0 0}
   .otl{display:flex;align-items:center;gap:0;margin:14px 0 6px;flex-wrap:wrap}
   .otl span{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink-2);opacity:0}
   .slide.active .otl span{animation:stepin .45s ease forwards}
@@ -436,12 +438,12 @@
           <div class="card-ui dark">
             <div class="ui-top"><i></i><i></i><i></i> &nbsp;Data Protection Suite · Overview · Regulatory clock</div>
             <div class="ui-body">
-              <div class="ui-title" style="color:#fff">DPDP Rules, 2025 — phased commencement <span class="ui-tag" style="background:rgba(255,255,255,.14);color:var(--gold-bright)">phase 1 in force</span></div>
-              <div class="clock">
-                <div><small>13 November 2026</small><b><span class="days" data-date="2026-11-13">—</span><span>days</span></b><p>Consent Manager framework live · SDF notifications begin</p></div>
-                <div><small>13 May 2027</small><b><span class="days" data-date="2027-05-13">—</span><span>days</span></b><p>Substantive obligations in force · breach &amp; rights clocks enforceable</p></div>
+              <div class="ui-title" style="color:#fff">DPDP Rules, 2025 — phased commencement <span class="ui-tag" id="hero-phase" style="background:rgba(255,255,255,.14);color:var(--gold-bright)">phase 1 in force</span></div>
+              <div class="clock" id="hero-clock">
+                <div data-ms="consent_manager_registration" data-after="Consent Manager registration open · Rule 4, s.6(9)"><small>13 November 2026</small><b><span class="days" data-date="2026-11-13">—</span><span>days</span></b><p>Consent Manager registration opens · Rule 4, s.6(9)</p></div>
+                <div data-ms="substantive_obligations" data-after="Substantive obligations in force · breach &amp; rights clocks enforceable"><small>13 May 2027</small><b><span class="days" data-date="2027-05-13">—</span><span>days</span></b><p>Substantive obligations in force · breach &amp; rights clocks enforceable</p></div>
               </div>
-              <p style="font-size:12.5px;color:rgba(255,255,255,.75);margin-top:14px">Standard tier = compliant before the first date. Advanced keeps it true after the second.</p>
+              <p id="hero-tiers" style="font-size:12.5px;color:rgba(255,255,255,.75);margin-top:14px" data-after="Standard tier = compliant. Advanced keeps it true, review after review.">Standard tier = compliant before the first date. Advanced keeps it true after the second.</p>
             </div>
           </div>
         </div>
@@ -543,8 +545,8 @@
     </div>
 
     <div class="timeline reveal">
-      <div class="tl warn"><span class="d">13 NOV 2026</span><b>Consent Manager registration opens</b><div class="n"><span class="days" data-date="2026-11-13">—</span><small>days from today</small></div><p>Companies meeting the First Schedule may apply to the Board to be registered as Consent Managers. A person's right to give or withdraw consent through one arrives with the rest of the Act on 13 May 2027 — your notices and consent records need to exist by then.</p><span class="ref">Rule 4 · Section 6(9)</span></div>
-      <div class="tl crit"><span class="d">13 MAY 2027</span><b>Every substantive obligation in force</b><div class="n"><span class="days" data-date="2027-05-13">—</span><small>days from today</small></div><p>Itemised notices, security safeguards, breach intimation, retention, rights timelines and children's-data rules all become enforceable at once.</p><span class="ref">Rules 3, 6–8, 10, 13 · Sections 5–14</span></div>
+      <div class="tl warn" data-ms="consent_manager_registration" data-after="Consent Manager registration open"><span class="d">13 NOV 2026</span><b>Consent Manager registration opens</b><div class="n"><span class="days" data-date="2026-11-13">—</span><small>days from today</small></div><p>Companies meeting the First Schedule may apply to the Board to be registered as Consent Managers. A person's right to give or withdraw consent through one arrives with the rest of the Act on 13 May 2027 — your notices and consent records need to exist by then.</p><span class="ref">Rule 4 · Section 6(9)</span></div>
+      <div class="tl crit" data-ms="substantive_obligations" data-after="Every substantive obligation in force"><span class="d">13 MAY 2027</span><b>Every substantive obligation in force</b><div class="n"><span class="days" data-date="2027-05-13">—</span><small>days from today</small></div><p>Itemised notices, security safeguards, breach intimation, retention, rights timelines and children's-data rules all become enforceable at once.</p><span class="ref">Rules 3, 6–8, 10, 13 · Sections 5–14</span></div>
       <div class="tl info"><span class="d">THE CLOCKS</span><b>72 hours. 90 days.</b><p>Breach: affected people told without delay, full report to the Board within 72 hours. Rights requests and grievances: answered within 90 days — after that, the person may go to the Board.</p><span class="ref">Rule 7 · Sections 11–14 · Rule 14</span></div>
       <div class="tl good"><span class="d">UP TO ₹250 CR</span><b>Penalty per instance</b><p>The maximum for failing reasonable security safeguards. The Board works as a digital office — complaints arrive online, and "did you know?" needs a written answer.</p><span class="ref">Schedule · Section 33</span></div>
     </div>
@@ -769,9 +771,41 @@
     const DUR = 6000; let cur = 0, timer = null;
     stage.style.setProperty('--dur', DUR + 'ms');
     slides.forEach((_, i) => { const b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'tab'); b.setAttribute('aria-label', 'Window ' + (i + 1)); b.innerHTML = '<i></i>'; b.addEventListener('click', () => go(i, true)); dots.appendChild(b); });
-    // live countdowns
+    // Regulatory clocks. Three states, never "overdue" — these are dates the law starts to apply:
+    //   upcoming: "N days"   today: "today"   passed: "in force · since <date>"
+    // The dates and wording come from the suite's milestone list (public_milestones, no key beyond the
+    // public one) so a newly notified date appears here without a site change; the markup above is the
+    // fallback if that call fails.
+    const MS_URL = 'https://REPLACE-WITH-PROJECT-REF.supabase.co/rest/v1/rpc/public_milestones';
+    const MS_KEY = 'REPLACE-WITH-ANON-KEY';
     const today = new Date(); today.setHours(0, 0, 0, 0);
-    document.querySelectorAll('.days').forEach(el => { const d = Math.max(0, Math.round((new Date(el.dataset.date) - today) / 864e5)); el.textContent = d; });
+    const fmtD = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+    const paintClock = (el, iso, title, titleAfter, detail) => {
+      const d = Math.round((new Date(iso + 'T00:00:00') - today) / 864e5);
+      const num = el.querySelector('.days'), unit = num && num.nextElementSibling, isTl = el.classList.contains('tl');
+      const headEl = isTl ? el.querySelector('b') : el.querySelector('p');   // the wording that flips once the date has passed
+      if (title) headEl.textContent = (d > 0 ? title : (titleAfter || title)) + (!isTl && detail ? ' · ' + detail : '');
+      else if (d <= 0 && el.dataset.after) headEl.textContent = el.dataset.after;
+      if (!num) return;
+      if (d > 0) { num.textContent = d; if (unit) unit.textContent = isTl ? 'days from today' : 'days'; }
+      else if (d === 0) { num.textContent = 'today'; if (unit) unit.textContent = ''; }
+      else { num.textContent = 'since'; if (unit) unit.textContent = fmtD(iso); el.classList.add('done'); }
+    };
+    document.querySelectorAll('.days').forEach(el => paintClock(el.closest('[data-ms], .tl, .clock > div') || el.parentElement, el.dataset.date));
+    const paintPhase = () => {   // the hero card's tag and footnote follow how many dates have passed
+      const dates = [...document.querySelectorAll('#hero-clock .days')].map(n => n.dataset.date);
+      const passed = dates.filter(iso => new Date(iso + 'T00:00:00') <= today).length;
+      const tag = document.getElementById('hero-phase'), foot = document.getElementById('hero-tiers');
+      if (tag) tag.textContent = passed >= dates.length ? 'fully in force' : 'phase ' + (passed + 1) + ' in force';
+      if (foot && passed >= dates.length) foot.textContent = foot.dataset.after;
+    };
+    paintPhase();
+    if (!/REPLACE-WITH/.test(MS_URL)) fetch(MS_URL, { method: 'POST', headers: { apikey: MS_KEY, Authorization: 'Bearer ' + MS_KEY, 'Content-Type': 'application/json' }, body: '{}' })
+      .then(r => r.ok ? r.json() : null).then(rows => {
+        if (!Array.isArray(rows)) return;
+        rows.forEach(m => document.querySelectorAll('[data-ms="' + m.key + '"]').forEach(el => { const n = el.querySelector('.days'); if (n) n.dataset.date = m.on_date; const sm = el.querySelector('small, .d'); if (sm && sm.classList.contains('d')) sm.textContent = fmtD(m.on_date).toUpperCase(); else if (sm) sm.textContent = fmtD(m.on_date); paintClock(el, m.on_date, m.title, m.title_after, el.classList.contains('tl') ? null : m.cite); }));
+        paintPhase();
+      }).catch(() => {});
     let paused = false;
     const auto = () => { clearTimeout(timer); if (!reduce && !paused) timer = setTimeout(() => { go(cur + 1); auto(); }, DUR); };
     const go = (i, manual) => {

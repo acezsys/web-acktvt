@@ -74,3 +74,14 @@ Pages live in folders (`dps/index.html`) so the address bar shows
 without leaving `#section` in the address, and the logo returns to
 `acktvt.com/`. Delete any old `dps.html` / `bms.html` / `privacy.html` from
 the repo if they are still there.
+
+
+## Regulatory clocks (2 Oct 2026)
+
+The homepage's two clocks (hero card and timeline) have three states — *N days*,
+*today*, *since <date>* — and never count below zero. The dates and wording are
+read from the Data Protection Suite's milestone list (`public_milestones()` on
+the DPS Supabase project) so a newly notified date appears here without a site
+change; set `MS_URL` and `MS_KEY` near the end of `index.html` to the project's
+REST URL and anon key. Until they are set, or if the call fails, the markup's
+own dates and `data-after` wording are used, so the page never shows a blank.
