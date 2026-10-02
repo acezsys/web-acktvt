@@ -776,8 +776,8 @@
     // The dates and wording come from the suite's milestone list (public_milestones, no key beyond the
     // public one) so a newly notified date appears here without a site change; the markup above is the
     // fallback if that call fails.
-    const MS_URL = 'https://REPLACE-WITH-PROJECT-REF.supabase.co/rest/v1/rpc/public_milestones';
-    const MS_KEY = 'REPLACE-WITH-ANON-KEY';
+    const MS_URL = 'https://khhseaibwnkwvttkdsem.supabase.co/rest/v1/rpc/public_milestones';
+    const MS_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoaHNlYWlid25rd3Z0dGtkc2VtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk0NzQyODYsImV4cCI6MjEwNTA1MDI4Nn0._3UZ6cID6WJf1R3mFJnvipY6eIwzpEVFaBgbJtq6HzE';
     const today = new Date(); today.setHours(0, 0, 0, 0);
     const fmtD = (iso) => new Date(iso + 'T00:00:00').toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     const paintClock = (el, iso, title, titleAfter, detail) => {
