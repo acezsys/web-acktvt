@@ -117,6 +117,24 @@ FORM_JS = """
 </script>
 """
 
+def vid(yt, poster, label, pill):
+    return (f'<button class="vid" type="button" data-yt="{yt}" data-title="{label}" aria-label="Play: {label}">'
+            f'<img src="/assets/{poster}" alt="" width="2560" height="1440" decoding="async">'
+            '<span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4l14 8-14 8z"/></svg></span>'
+            f'<span class="meta"><span class="yt">{pill}</span></span></button>')
+VID_JS = """
+<script>
+  document.querySelectorAll('.vid[data-yt]').forEach(v => v.addEventListener('click', () => {
+    if (v.classList.contains('on')) return;
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/' + v.dataset.yt + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    f.title = v.dataset.title || 'Video'; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    v.classList.add('on'); v.appendChild(f);
+  }));
+</script>
+"""
+
 
 def chips(name, options, multi=False):
     t = 'checkbox' if multi else 'radio'
@@ -178,7 +196,7 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
   </div>
 </section>
 {footer}
-{FORM_JS}
+{FORM_JS}{VID_JS}
 </body>
 </html>
 """
@@ -218,7 +236,7 @@ page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · 
          ('Which describes you best?', None, 'organisation_type',
           ['Hospital, under 50 beds', 'Hospital, 50–200 beds', 'Hospital, 200+ beds', 'Diagnostic lab or lab chain', 'Manufacturing company', 'Real estate developer', 'School or college', 'Coaching institute', 'Consultant / advisor'], False),
      ],
-     f"""
+     vid('EF8qsiAfE6w', 'poster-dps.jpg', 'The DPDP Act in 74 seconds — acktvt Data Protection Suite', '▶ 74 sec · plays here') + f"""
       <div class="card"><h3>What happens next</h3><div class="next">
         <div><b></b><span>We read your answers and reply by e-mail within one working day — a short readiness view for an organisation like yours.</span></div>
         <div><b></b><span>A 20-minute walkthrough on a call or WhatsApp, on your data if you like.</span></div>
@@ -251,10 +269,10 @@ page('bms', 'Business Management Suite', 'Business Management Suite · for growi
          ('How big is the team?', None, 'size',
           ['Under 25 people', '25–100', '100–300', '300+', 'More than one plant'], False),
      ],
-     f"""
+     vid('JPu1dl3rvAU', 'poster-bms.jpg', 'acktvt Business Management Suite — explainer', '▶ Plays here') + f"""
       <div class="card"><h3>What happens next</h3><div class="next">
         <div><b></b><span>We reply by e-mail within one working day with the two or three modules that would change your week first.</span></div>
-        <div><b></b><span>A 30-minute walkthrough on your own order flow — on a call, or at your plant if you are near Mumbai.</span></div>
+        <div><b></b><span>A 30-minute walkthrough on your own order flow — on a call, or at your plant.</span></div>
         <div><b></b><span>A written scope with what we set up, what your team enters, and when you go live. No retyping, no surprises.</span></div>
       </div></div>
       <div class="card"><h3>Want to look around first?</h3><p>The live demo is a real deployment loaded with a sample company — orders, production, stores, dispatch and the dashboard, all populated. Open it, click anything; nothing you do there affects a real business.</p>
@@ -293,12 +311,13 @@ priv = f"""<!doctype html>
 {nav}
 <section class="page" style="padding-bottom:40px"><div class="wrap"><span class="eyebrow" style="color:var(--gold-bright)">acktvt.com</span><h1>Privacy notice</h1><p class="dek">What we collect on this website, why, and what you can ask of us. Written the way we ask our clients to write theirs.</p></div></section>
 <section class="legal"><div class="wrap">
-  <p><b>Who we are.</b> acktvt is a product line of Prowessz Consulting Services LLP, Mumbai ("Prowessz", "we"). For the purposes of the Digital Personal Data Protection Act, 2023, Prowessz is the Data Fiduciary for personal data collected through this website.</p>
+  <p><b>Who we are.</b> acktvt is a product line of Prowessz Consulting Services LLP, India ("Prowessz", "we"). For the purposes of the Digital Personal Data Protection Act, 2023, Prowessz is the Data Fiduciary for personal data collected through this website.</p>
   <h2>What we collect and why</h2>
   <ul>
     <li><b>Enquiry forms</b> (Data Protection Suite and Business Management Suite pages): your name, organisation, work e-mail, phone number, your answers to the short questions, and anything you write in the comment box. <i>Purpose:</i> to reply to your enquiry, arrange a walkthrough and, if you ask for one, set up a trial. <i>Basis:</i> your consent, given by ticking the box before you send.</li>
     <li><b>WhatsApp and e-mail</b> you send us: the contents of your message and your contact details, for the same purpose.</li>
-    <li><b>Website visits:</b> this site is a static page hosted on GitHub Pages. We do not set cookies and do not run analytics or advertising trackers. The hosting provider may keep standard server logs (IP address, browser, pages requested) for security and operations.</li>
+    <li><b>Website visits:</b> this site is a static page hosted on GitHub Pages. We do not set cookies and do not run analytics or advertising trackers. The hosting provider may keep standard server logs (IP address, browser, pages requested) for security and operations. Fonts and images are served from this site itself.</li>
+    <li><b>Explainer videos:</b> the videos are hosted on YouTube. Nothing is loaded from YouTube until you press play; when you do, the video is served from YouTube's privacy-enhanced mode (youtube-nocookie.com) and Google's privacy policy applies to that playback.</li>
   </ul>
   <h2>Who processes it</h2>
   <p>Form submissions are relayed to our inbox by FormSubmit (a form-to-e-mail service) and stored in our business e-mail. WhatsApp messages are handled by WhatsApp under its own terms. We do not sell personal data and do not share it with anyone else unless the law requires it.</p>
@@ -307,8 +326,8 @@ priv = f"""<!doctype html>
   <h2>Your rights</h2>
   <p>You may ask us for a summary of the personal data we hold about you, ask us to correct or erase it, withdraw your consent, or nominate someone to exercise these rights on your behalf. Write to <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a>; we respond within the time the Rules allow and usually much sooner. If you are not satisfied with our response, you may approach the Data Protection Board of India.</p>
   <h2>Contact</h2>
-  <p>Prowessz Consulting Services LLP, Mumbai · <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> · WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a> · <a href="https://prowessz.com" style="text-decoration:underline">prowessz.com</a>.</p>
-  <p style="margin-top:28px;font-size:13px;color:var(--ink-soft)">Last updated September 2026. Changes are posted on this page.</p>
+  <p>Prowessz Consulting Services LLP, India · <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> · WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a> · <a href="https://prowessz.com" style="text-decoration:underline">prowessz.com</a>.</p>
+  <p style="margin-top:28px;font-size:13px;color:var(--ink-soft)">Last updated October 2026. Changes are posted on this page.</p>
 </div></section>
 {footer}
 <script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ const n = document.getElementById('nav'); n.classList.toggle('open'); }});</script>
