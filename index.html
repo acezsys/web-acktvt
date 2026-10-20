@@ -512,8 +512,8 @@
      Paste this whole block IMMEDIATELY AFTER the opening <body> tag of index.html.
      - Before 20-Oct-2026 14:30 IST : full-screen festive banner, the site is hidden.
      - At exactly 14:30 IST         : banner lifts by itself (even on an open page) + celebration.
-     - 14:30 IST to 21-Oct 00:00 IST: every fresh page load shows 5 s of sparkles, balloons, ribbons.
-     - From 21-Oct 00:00 IST        : nothing happens; the block is inert (remove it whenever convenient).
+     - 14:30 IST to 26-Oct 00:00 IST: every fresh page load shows 9 s of sparkles, balloons, ribbons.
+     - From 26-Oct 00:00 IST        : nothing happens; the block is inert (remove it whenever convenient).
      Preview any state on the live site: add ?launchtest=pre  ?launchtest=party  ?launchtest=post
      Time comes from the server's clock (HTTP Date header), with the visitor's clock as fallback.
      =========================================================================================== -->
@@ -631,7 +631,7 @@
 (function () {
   'use strict';
   var LAUNCH = Date.UTC(2026, 9, 20, 9, 0, 0);    // 20-Oct-2026 14:30 IST
-  var PARTY_END = Date.UTC(2026, 9, 20, 18, 30, 0); // 21-Oct-2026 00:00 IST
+  var PARTY_END = Date.UTC(2026, 9, 25, 18, 30, 0); // 26-Oct-2026 00:00 IST
   var root = document.documentElement;
   var offset = 0;                                   // server time minus visitor time
   var test = (location.search.match(/[?&]launchtest=(pre|party|post)\b/) || [])[1] || null;
@@ -729,7 +729,7 @@
     if (phase() === 'party') setTimeout(party, 300);
   }
 
-  /* ---------- celebration: sparkles, balloons, ribbons (5 s) ---------- */
+  /* ---------- celebration: sparkles, balloons, ribbons (9 s) ---------- */
   function party() {
     if (partyDone || reduce) return; partyDone = true;
     var c = document.createElement('canvas'); c.id = 'lg-party'; c.setAttribute('aria-hidden', 'true');
@@ -737,18 +737,20 @@
     var x = c.getContext('2d'), dpr = Math.min(window.devicePixelRatio || 1, 2), W, H;
     function size() { W = window.innerWidth; H = window.innerHeight; c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0); }
     size(); window.addEventListener('resize', size);
-    var COLORS = ['#FF8C1A', '#FFC21F', '#C0392B', '#006038', '#D9A94A', '#E84393', '#2E86DE', '#FFFFFF'];
+    var COLORS = ['#FF8C1A', '#FFC21F', '#C0392B', '#006038', '#D9A94A', '#E84393', '#2E86DE', '#FFFFFF',
+      '#8E44AD', '#16C2A3', '#D81B60', '#7CB342', '#4FC3F7', '#FF6F61', '#3949AB', '#FFD54F'];
     function pick() { return COLORS[(Math.random() * COLORS.length) | 0]; }
     var balloons = [], ribbons = [], sparks = [], i;
-    var nb = Math.round(Math.min(34, Math.max(14, W / 45)));
+    var DUR = 9000, RECYCLE = DUR - 2600;   // keep refilling until about 6.4 s, then let the sky clear
+    var nb = Math.round(Math.min(46, Math.max(20, W / 32)));
     for (i = 0; i < nb; i++) balloons.push({ x: Math.random() * W, y: H * .55 + Math.random() * H * .75, r: 18 + Math.random() * 16,
       vy: 2.4 + Math.random() * 2.4, sw: Math.random() * 6.28, c: pick() });
-    var nr = Math.round(Math.min(130, Math.max(50, W / 11)));
+    var nr = Math.round(Math.min(170, Math.max(70, W / 8)));
     for (i = 0; i < nr; i++) ribbons.push({ x: Math.random() * W, y: -30 - Math.random() * H * .35 + (i % 3 === 0 ? Math.random() * H * .5 : 0), len: 18 + Math.random() * 22,
       vy: 2 + Math.random() * 2.6, ph: Math.random() * 6.28, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .2, c: pick() });
     for (i = 0; i < 70; i++) sparks.push({ x: Math.random() * W, y: Math.random() * H, s: 2 + Math.random() * 4, ph: Math.random() * 6.28,
       sp: .08 + Math.random() * .12, c: Math.random() < .7 ? '#FFE7A0' : '#FFFFFF' });
-    var t0 = performance.now(), DUR = 5000;
+    var t0 = performance.now();
     function star(px, py, r, a, col) {
       x.save(); x.globalAlpha = a; x.fillStyle = col; x.translate(px, py); x.beginPath();
       for (var k = 0; k < 8; k++) { var rr = k % 2 ? r * .28 : r; var an = k * Math.PI / 4; x.lineTo(Math.cos(an) * rr, Math.sin(an) * rr); }
@@ -762,13 +764,15 @@
       for (k = 0; k < sparks.length; k++) { var s = sparks[k]; s.ph += s.sp; var a = Math.max(0, Math.sin(s.ph)); star(s.x, s.y, s.s * (0.6 + a), a * fade, s.c); }
       x.globalAlpha = fade;
       for (k = 0; k < ribbons.length; k++) {
-        var r = ribbons[k]; r.y += r.vy; r.ph += .12; r.rot += r.vr; var ox = Math.sin(r.ph) * 6;
+        var r = ribbons[k]; r.y += r.vy;
+        if (r.y > H + 40 && el < RECYCLE) { r.y = -30 - Math.random() * 60; r.x = Math.random() * W; r.c = pick(); } r.ph += .12; r.rot += r.vr; var ox = Math.sin(r.ph) * 6;
         x.save(); x.translate(r.x + ox, r.y); x.rotate(r.rot); x.strokeStyle = r.c; x.lineWidth = 3.2; x.lineCap = 'round'; x.beginPath();
         for (var j = 0; j <= 10; j++) { var tt = j / 10; x.lineTo(Math.sin(tt * 6.28 + r.ph) * 5, tt * r.len); }
         x.stroke(); x.restore();
       }
       for (k = 0; k < balloons.length; k++) {
-        var b = balloons[k]; b.y -= b.vy; b.sw += .03; var bx = b.x + Math.sin(b.sw) * 10;
+        var b = balloons[k]; b.y -= b.vy;
+        if (b.y < -b.r * 3.2 && el < RECYCLE) { b.y = H + b.r * 1.5 + Math.random() * H * .3; b.x = Math.random() * W; b.c = pick(); } b.sw += .03; var bx = b.x + Math.sin(b.sw) * 10;
         x.strokeStyle = 'rgba(80,60,40,.55)'; x.lineWidth = 1; x.beginPath(); x.moveTo(bx, b.y + b.r * 1.15);
         x.quadraticCurveTo(bx + 6, b.y + b.r * 1.9, bx - 2, b.y + b.r * 2.8); x.stroke();
         x.fillStyle = b.c; x.beginPath(); x.ellipse(bx, b.y, b.r * .86, b.r * 1.08, 0, 0, 6.2832); x.fill();
