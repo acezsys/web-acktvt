@@ -8,7 +8,8 @@ Form submissions go to acktvt@prowessz.com through FormSubmit
 a one-time activation e-mail to that inbox; click the link once and every
 later submission is delivered. See README.md.
 """
-import re, os
+import re, os, json
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "seo_head.py"), encoding="utf-8").read())
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 src = open(os.path.join(HERE, 'index.html'), encoding='utf-8').read()
@@ -149,10 +150,7 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>{title} · acktvt</title>
-<meta name="description" content="{dek}" />
-<meta name="robots" content="index,follow" />
-{head_meta}{style}{EXTRA_CSS}
+{SEO_HEAD(fname)}{head_meta}{style}{EXTRA_CSS}
 </head>
 <body>
 {nav}
@@ -197,6 +195,7 @@ def page(fname, title, eyebrow, h1, dek, form_title, form_sub, questions, side, 
 </section>
 {footer}
 {FORM_JS}{VID_JS}
+<script src="/assets/consent.js" defer></script>
 </body>
 </html>
 """
@@ -303,9 +302,7 @@ priv = f"""<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Privacy notice · acktvt</title>
-<meta name="description" content="How Prowessz Consulting Services LLP handles personal data collected through acktvt.com." />
-{head_meta}{style}{EXTRA_CSS}
+{SEO_HEAD("privacy")}{head_meta}{style}{EXTRA_CSS}
 </head>
 <body>
 {nav}
@@ -316,21 +313,23 @@ priv = f"""<!doctype html>
   <ul>
     <li><b>Enquiry forms</b> (Data Protection Suite and Business Management Suite pages): your name, organisation, work e-mail, phone number, your answers to the short questions, and anything you write in the comment box. <i>Purpose:</i> to reply to your enquiry, arrange a walkthrough and, if you ask for one, set up a trial. <i>Basis:</i> your consent, given by ticking the box before you send.</li>
     <li><b>WhatsApp and e-mail</b> you send us: the contents of your message and your contact details, for the same purpose.</li>
-    <li><b>Website visits:</b> this site is a static page hosted on GitHub Pages. We do not set cookies and do not run analytics or advertising trackers. The hosting provider may keep standard server logs (IP address, browser, pages requested) for security and operations. Fonts and images are served from this site itself.</li>
+    <li><b>Website visits:</b> this site is a static page hosted on GitHub Pages. Fonts and images are served from this site itself. The hosting provider may keep standard server logs (IP address, browser, pages requested) for security and operations. We do not run advertising trackers.</li>
+    <li><b>Analytics, only if you agree:</b> if you click <i>Accept</i> on the cookie banner, we use Google Analytics and, where enabled, Microsoft Clarity to understand how the site is used: pages visited, clicks and scrolling, device and browser type, and approximate location (city or country). Anything typed into a page is masked. Nothing is loaded and no analytics cookies are set until you accept. You can change your choice at any time through <i>Cookie settings</i> in the footer. <i>Purpose:</i> to improve the site. <i>Basis:</i> your consent. Analytics data is kept for up to 14 months.</li>
     <li><b>Explainer videos:</b> the videos are hosted on YouTube. Nothing is loaded from YouTube until you press play; when you do, the video is served from YouTube's privacy-enhanced mode (youtube-nocookie.com) and Google's privacy policy applies to that playback.</li>
   </ul>
   <h2>Who processes it</h2>
-  <p>Form submissions are relayed to our inbox by FormSubmit (a form-to-e-mail service) and stored in our business e-mail. WhatsApp messages are handled by WhatsApp under its own terms. We do not sell personal data and do not share it with anyone else unless the law requires it.</p>
+  <p>Form submissions are relayed to our inbox by FormSubmit (a form-to-e-mail service) and stored in our business e-mail. WhatsApp messages are handled by WhatsApp under its own terms. If you accept analytics, Google (Analytics) and Microsoft (Clarity) process usage data for us; they may do so outside India. We do not sell personal data and do not share it with anyone else unless the law requires it.</p>
   <h2>How long we keep it</h2>
   <p>Enquiry details are kept for as long as we are talking, and for up to 24 months after the last contact so that we can pick up the conversation if you come back. If you become a client, your details move to our client records under the engagement letter. You can ask us to delete them sooner at any time.</p>
   <h2>Your rights</h2>
-  <p>You may ask us for a summary of the personal data we hold about you, ask us to correct or erase it, withdraw your consent, or nominate someone to exercise these rights on your behalf. Write to <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a>; we respond within the time the Rules allow and usually much sooner. If you are not satisfied with our response, you may approach the Data Protection Board of India.</p>
+  <p>You may ask us for a summary of the personal data we hold about you, ask us to correct or erase it, withdraw your consent, or nominate someone to exercise these rights on your behalf. Write to <a href="mailto:privacy@prowessz.com" style="text-decoration:underline">privacy@prowessz.com</a>; we respond within the time the Rules allow and usually much sooner. If you are not satisfied with our response, you may approach the Data Protection Board of India.</p>
   <h2>Contact</h2>
   <p>Prowessz Consulting Services LLP, India · <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> · WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a> · <a href="https://prowessz.com" style="text-decoration:underline">prowessz.com</a>.</p>
   <p style="margin-top:28px;font-size:13px;color:var(--ink-soft)">Last updated October 2026. Changes are posted on this page.</p>
 </div></section>
 {footer}
 <script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ const n = document.getElementById('nav'); n.classList.toggle('open'); }});</script>
+<script src="/assets/consent.js" defer></script>
 </body>
 </html>
 """
@@ -363,10 +362,7 @@ portal_html = f"""<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Client login · acktvt</title>
-<meta name="description" content="Sign in to your acktvt workspace — Data Protection Suite or Business Management Suite — or start a 14-day trial." />
-<meta name="robots" content="index,follow" />
-{head_meta}{style}{EXTRA_CSS}{PORTAL_CSS}
+{SEO_HEAD("login")}{head_meta}{style}{EXTRA_CSS}{PORTAL_CSS}
 </head>
 <body>
 {nav}
@@ -409,6 +405,7 @@ portal_html = f"""<!doctype html>
 </div></section>
 {footer}
 <script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ const n = document.getElementById('nav'); n.classList.toggle('open'); }});</script>
+<script src="/assets/consent.js" defer></script>
 </body>
 </html>
 """
@@ -423,6 +420,7 @@ nf = f"""<!doctype html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Page not found · acktvt</title>
+<meta name="robots" content="noindex" />
 {head_meta.replace('href="../assets/', 'href="/assets/')}{style}{EXTRA_CSS}
 </head>
 <body>
@@ -430,6 +428,7 @@ nf = f"""<!doctype html>
 <section class="page" style="min-height:70vh;display:flex;align-items:center"><div class="wrap"><span class="eyebrow" style="color:var(--gold-bright)">404</span><h1>That page isn't here.</h1><p class="dek">The link may be old or mistyped. Everything about both suites is one page away.</p><p style="margin-top:26px;display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary" href="/">Go to acktvt.com</a><a class="btn btn-ghost" href="/dps/">Data Protection Suite</a><a class="btn btn-ghost" href="/bms/">Business Management Suite</a></p></div></section>
 {footer.replace('href="../', 'href="/')}
 <script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ document.getElementById('nav').classList.toggle('open'); }});</script>
+<script src="/assets/consent.js" defer></script>
 </body>
 </html>
 """

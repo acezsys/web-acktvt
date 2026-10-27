@@ -104,3 +104,10 @@ YouTube player (privacy-enhanced youtube-nocookie.com) is created only when pres
 change a video, change the ID in `index.html` (`data-yt` and the "Watch on YouTube" link)
 and in `build_pages.py` (`vid(...)` calls). The videos must have "Allow embedding" on
 in YouTube Studio.
+
+## SEO and analytics (added Oct 2026)
+
+- Every page has its own search title, description, canonical link, share-preview tags and structured data (schema.org). The landing page's head is in `index.html`; the sub-pages' heads live in `seo_head.py`, which `build_pages.py` reads — edit them there, then run `python3 build_pages.py`.
+- `robots.txt` and `sitemap.xml` sit at the root. Submit `https://acktvt.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+- `assets/consent.js` holds the analytics IDs (`ga4`, `clarity`). Until an ID is filled in, nothing loads and no cookie banner appears. Once filled in, analytics loads only after a visitor clicks Accept; "Cookie settings" in the footer reopens the choice. Clicks on WhatsApp, e-mail, phone, demo/trial/walkthrough buttons and form submissions are sent as `generate_lead` events.
+- The privacy notice (`privacy/`) describes the consent-based analytics; privacy requests go to privacy@prowessz.com.
