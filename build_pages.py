@@ -214,6 +214,9 @@ LAUNCH     = 'https://acktvt.prowessz.com/'
 LAUNCH_DPS = LAUNCH + '?app=dps'
 LAUNCH_BMS = LAUNCH + '?app=bms'
 LAUNCH_TRIAL = LAUNCH + '?app=dps&next=/signup'
+LAUNCH_GENUINE = LAUNCH + '?app=genuine'   # Nov 2026: the launcher's index.html must carry these three apps
+LAUNCH_ORIGIN = LAUNCH + '?app=origin'
+LAUNCH_MEET = LAUNCH + '?app=meet'
 
 # The Business Management Suite demo — a real deployment loaded with a sample
 # company, open to anyone. It is deliberately NOT behind the enquiry form:
@@ -241,8 +244,8 @@ page('dps', 'Data Protection Suite', 'Data Protection Suite · DPDP Act 2023 · 
         <div><b></b><span>A 20-minute walkthrough on a call or WhatsApp, on your data if you like.</span></div>
         <div><b></b><span>If it fits, a 14-day trial with sample data loaded — no card, nothing lost when you choose a plan.</span></div>
       </div></div>
-      <div class="card"><h3>What the suite covers</h3><p>Twenty-eight modules across three tiers, with sector packs for healthcare, manufacturing, real estate and education. Standard alone meets every obligation the Act and Rules place on a Data Fiduciary.</p>
-        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Child-data register</span><span>Lead / enquiry-consent log</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>NABH / ISO 27001 crosswalk</span><span>Groups</span></div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Twenty-eight modules across three tiers, with sector packs for healthcare, manufacturing, real estate and education. Standard alone covers every obligation the Act and Rules place on a Data Fiduciary. acktvt Genuine, an add-on on any tier, makes your consent, rights and breach records tamper-evident.</p>
+        <div class="mods"><span>Data map &amp; RoPA</span><span>Notices</span><span>Consent ledger</span><span>Rights desk · 90-day clock</span><span>Privacy page</span><span>Vendors &amp; DPAs</span><span>Safeguards</span><span>Retention &amp; erasure</span><span>Parental consent</span><span>Child-data register</span><span>Lead / enquiry-consent log</span><span>Breach · 72-hr clock</span><span>Grievances</span><span>Gap assessment</span><span>Reviews &amp; reminders</span><span>Training</span><span>DPIA</span><span>Evidence pack</span><span>Regulatory watch</span><span>NABH / ISO 27001 crosswalk</span><span>Groups</span><span>acktvt Genuine · add-on</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Data Protection Suite enquiry',
@@ -276,8 +279,8 @@ page('bms', 'Business Management Suite', 'Business Management Suite · for growi
       </div></div>
       <div class="card"><h3>Want to look around first?</h3><p>The live demo is a real deployment loaded with a sample company — orders, production, stores, dispatch and the dashboard, all populated. Open it, click anything; nothing you do there affects a real business.</p>
         <p style="margin-top:12px"><a class="btn btn-primary" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo →</a></p></div>
-      <div class="card"><h3>What the suite covers</h3><p>Nine modules that run a growing company end to end, built around GST and the way Indian manufacturing actually works.</p>
-        <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Dispatch &amp; e-way bills</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span></div></div>
+      <div class="card"><h3>What the suite covers</h3><p>Nine modules that run a growing company end to end, built around GST and the way Indian manufacturing actually works, with add-ons you switch on when you need them.</p>
+        <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Batch &amp; serial tracking</span><span>Dispatch &amp; release sign-off</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span><span>Service &amp; AMC · add-on</span><span>Order Intelligence · add-on</span><span>acktvt Meet · add-on</span><span>acktvt Genuine · add-on</span><span>acktvt Origin · add-on</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Business Management Suite enquiry',
@@ -353,7 +356,10 @@ PORTAL_CSS = """
   .pnew p{color:var(--ink-soft);font-size:13.5px;margin:0;max-width:56ch}
   .pnew .acts{display:flex;gap:10px;flex-wrap:wrap}
   .psafe{font-size:12.5px;color:var(--ink-soft);margin-top:22px;text-align:center;line-height:1.6}
-  @media (max-width:860px){.pgrid{grid-template-columns:1fr}.portal{padding:0 20px 56px}}
+  .pgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+  .pgrid3 .pcard{padding:24px 24px 22px;box-shadow:0 12px 32px rgba(6,42,28,.07)}
+  .pgrid3 .pcard h2{font-size:19px}
+  @media (max-width:860px){.pgrid,.pgrid3{grid-template-columns:1fr}.portal{padding:0 20px 56px}}
 </style>
 """
 
@@ -369,7 +375,7 @@ portal_html = f"""<!doctype html>
 <section class="page" style="padding-bottom:64px"><div class="wrap">
   <span class="eyebrow" style="color:var(--gold-bright)">Client portal</span>
   <h1>Welcome back. Let's get you in.</h1>
-  <p class="dek">This is the front door to both suites. Pick yours and we'll take you straight to your workspace, where you sign in on its own encrypted address — the one place your password belongs.</p>
+  <p class="dek">This is the front door to every acktvt product. Pick yours and we'll take you straight to your workspace, where you sign in on its own encrypted address — the one place your password belongs.</p>
 </div></section>
 <section class="light" style="padding:0"><div class="portal">
   <div class="pgrid">
@@ -386,6 +392,29 @@ portal_html = f"""<!doctype html>
       <p>Tenders, sales, purchase, stores, production, quality, dispatch and accounts on one traceability spine.</p>
       <a class="btn btn-primary" href="{LAUNCH_BMS}" target="_blank" rel="noopener">Client login — Business Management →</a>
       <div class="fine">Same login your team uses on the shop floor and on the Android app.</div>
+    </div>
+  </div>
+  <div class="pgrid3">
+    <div class="pcard">
+      <span class="eyebrow">acktvt Genuine</span>
+      <h2>Certificates anyone can check</h2>
+      <p>For institutes, labs and certification bodies that issue certificates with acktvt Genuine.</p>
+      <a class="btn btn-green" href="{LAUNCH_GENUINE}" target="_blank" rel="noopener">Sign in — acktvt Genuine →</a>
+      <div class="fine">Checking a certificate needs no login: <a href="https://genuine.acktvt.com/c" target="_blank" rel="noopener" style="text-decoration:underline">check a certificate</a>.</div>
+    </div>
+    <div class="pcard">
+      <span class="eyebrow">acktvt Origin</span>
+      <h2>Product batches and QR labels</h2>
+      <p>For brands that record batches and print labels with acktvt Origin.</p>
+      <a class="btn btn-green" href="{LAUNCH_ORIGIN}" target="_blank" rel="noopener">Sign in — acktvt Origin →</a>
+      <div class="fine">Checking a label needs no login: <a href="https://origin.acktvt.com/o" target="_blank" rel="noopener" style="text-decoration:underline">check a product label</a>.</div>
+    </div>
+    <div class="pcard">
+      <span class="eyebrow">acktvt Meet</span>
+      <h2>Video meetings</h2>
+      <p>Host or join a meeting in the browser. Nothing to install.</p>
+      <a class="btn btn-primary" href="{LAUNCH_MEET}" target="_blank" rel="noopener">Open acktvt Meet →</a>
+      <div class="fine">Invited to a meeting? Use the link in your invitation. From the Business Management Suite, use the call button on the record.</div>
     </div>
   </div>
   <div class="pnew">

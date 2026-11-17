@@ -4,21 +4,21 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Client Login | acktvt</title>
-<meta name="description" content="Sign in to your acktvt workspace, Data Protection Suite or Business Management Suite, or start a 14-day trial." />
+<meta name="description" content="Sign in to your acktvt workspace: Data Protection Suite, Business Management Suite, acktvt Genuine, acktvt Origin or acktvt Meet, or start a 14-day trial." />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <link rel="canonical" href="https://acktvt.com/login/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="acktvt" />
 <meta property="og:locale" content="en_IN" />
 <meta property="og:title" content="Client Login | acktvt" />
-<meta property="og:description" content="Sign in to your acktvt workspace, Data Protection Suite or Business Management Suite, or start a 14-day trial." />
+<meta property="og:description" content="Sign in to your acktvt workspace: Data Protection Suite, Business Management Suite, acktvt Genuine, acktvt Origin or acktvt Meet, or start a 14-day trial." />
 <meta property="og:url" content="https://acktvt.com/login/" />
 <meta property="og:image" content="https://acktvt.com/assets/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Client Login | acktvt" />
-<meta name="twitter:description" content="Sign in to your acktvt workspace, Data Protection Suite or Business Management Suite, or start a 14-day trial." />
+<meta name="twitter:description" content="Sign in to your acktvt workspace: Data Protection Suite, Business Management Suite, acktvt Genuine, acktvt Origin or acktvt Meet, or start a 14-day trial." />
 <meta name="twitter:image" content="https://acktvt.com/assets/og-image.jpg" />
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"acktvt","item":"https://acktvt.com/"},{"@type":"ListItem","position":2,"name":"Client login","item":"https://acktvt.com/login/"}]}]}</script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
@@ -513,6 +513,19 @@
     .proof b{font-size:28px}
   }
   @media (prefers-reduced-motion:reduce){.hero::before{animation:none}.show{transition:none}}
+
+  /* Meet · Genuine · Origin (Nov 2026) */
+  .companions .card{display:flex;flex-direction:column;text-decoration:none;color:inherit}
+  .companions .card h4{font-size:17px;margin:10px 0 6px}
+  .companions .clink{margin-top:auto;padding-top:14px;display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:600;color:var(--green)}
+  .card p a{color:var(--green);text-decoration:underline}
+  .comp{border:var(--hair,1px) solid var(--line);border-radius:18px;background:linear-gradient(180deg,#fff,#FBFDFC);box-shadow:var(--sh-1,0 1px 2px rgba(6,42,28,.06));padding:28px 28px 24px;margin-top:22px;scroll-margin-top:96px}
+  .comp .chead h3{font-size:clamp(22px,2.4vw,28px);margin:10px 0 8px}
+  .comp .chead p{color:var(--ink-soft);max-width:78ch;margin:0 0 18px}
+  .comp .cfoot{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:20px}
+  .comp .cfoot span{font-size:13.5px;color:var(--ink-soft);flex:1 1 320px}
+  .comp .modules{grid-template-columns:repeat(2,1fr)}
+  @media (max-width:720px){.comp{padding:22px 18px 20px}.comp .modules{grid-template-columns:1fr}}
 </style>
 <style>
   .page{background:radial-gradient(1000px 500px at 10% -10%,#0E5A3B 0%,transparent 60%),linear-gradient(180deg,#062A1C 0%,#071F16 100%);color:#fff;padding:132px 0 56px}
@@ -581,7 +594,10 @@
   .pnew p{color:var(--ink-soft);font-size:13.5px;margin:0;max-width:56ch}
   .pnew .acts{display:flex;gap:10px;flex-wrap:wrap}
   .psafe{font-size:12.5px;color:var(--ink-soft);margin-top:22px;text-align:center;line-height:1.6}
-  @media (max-width:860px){.pgrid{grid-template-columns:1fr}.portal{padding:0 20px 56px}}
+  .pgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+  .pgrid3 .pcard{padding:24px 24px 22px;box-shadow:0 12px 32px rgba(6,42,28,.07)}
+  .pgrid3 .pcard h2{font-size:19px}
+  @media (max-width:860px){.pgrid,.pgrid3{grid-template-columns:1fr}.portal{padding:0 20px 56px}}
 </style>
 
 </head>
@@ -595,6 +611,7 @@
     <nav class="menu" id="menu">
       <a href="../#bms">Business Management</a>
       <a href="../#dps">Data Protection</a>
+      <a href="../#more">Companions</a>
       <a href="../#platform">Platform</a>
       <a href="../#tiers">Tiers</a>
       <a href="../#contact">Contact</a>
@@ -607,7 +624,7 @@
 <section class="page" style="padding-bottom:64px"><div class="wrap">
   <span class="eyebrow" style="color:var(--gold-bright)">Client portal</span>
   <h1>Welcome back. Let's get you in.</h1>
-  <p class="dek">This is the front door to both suites. Pick yours and we'll take you straight to your workspace, where you sign in on its own encrypted address — the one place your password belongs.</p>
+  <p class="dek">This is the front door to every acktvt product. Pick yours and we'll take you straight to your workspace, where you sign in on its own encrypted address — the one place your password belongs.</p>
 </div></section>
 <section class="light" style="padding:0"><div class="portal">
   <div class="pgrid">
@@ -624,6 +641,29 @@
       <p>Tenders, sales, purchase, stores, production, quality, dispatch and accounts on one traceability spine.</p>
       <a class="btn btn-primary" href="https://acktvt.prowessz.com/?app=bms" target="_blank" rel="noopener">Client login — Business Management →</a>
       <div class="fine">Same login your team uses on the shop floor and on the Android app.</div>
+    </div>
+  </div>
+  <div class="pgrid3">
+    <div class="pcard">
+      <span class="eyebrow">acktvt Genuine</span>
+      <h2>Certificates anyone can check</h2>
+      <p>For institutes, labs and certification bodies that issue certificates with acktvt Genuine.</p>
+      <a class="btn btn-green" href="https://acktvt.prowessz.com/?app=genuine" target="_blank" rel="noopener">Sign in — acktvt Genuine →</a>
+      <div class="fine">Checking a certificate needs no login: <a href="https://genuine.acktvt.com/c" target="_blank" rel="noopener" style="text-decoration:underline">check a certificate</a>.</div>
+    </div>
+    <div class="pcard">
+      <span class="eyebrow">acktvt Origin</span>
+      <h2>Product batches and QR labels</h2>
+      <p>For brands that record batches and print labels with acktvt Origin.</p>
+      <a class="btn btn-green" href="https://acktvt.prowessz.com/?app=origin" target="_blank" rel="noopener">Sign in — acktvt Origin →</a>
+      <div class="fine">Checking a label needs no login: <a href="https://origin.acktvt.com/o" target="_blank" rel="noopener" style="text-decoration:underline">check a product label</a>.</div>
+    </div>
+    <div class="pcard">
+      <span class="eyebrow">acktvt Meet</span>
+      <h2>Video meetings</h2>
+      <p>Host or join a meeting in the browser. Nothing to install.</p>
+      <a class="btn btn-primary" href="https://acktvt.prowessz.com/?app=meet" target="_blank" rel="noopener">Open acktvt Meet →</a>
+      <div class="fine">Invited to a meeting? Use the link in your invitation. From the Business Management Suite, use the call button on the record.</div>
     </div>
   </div>
   <div class="pnew">
@@ -648,7 +688,7 @@
         <a class="brand" href="../" style="margin-bottom:12px"><span class="mark"><svg viewBox="0 0 1254 1254" aria-hidden="true"><g transform="translate(0,1254) scale(0.1,-0.1)" fill="#fff"><path d="M6423 10309 c-67 -16 -112 -68 -249 -294 -186 -307 -668 -1075 -887 -1415 -472 -732 -739 -1127 -1590 -2355 -608 -876 -1388 -1918 -2046 -2730 -66 -82 -121 -155 -121 -162 0 -34 29 -19 102 53 136 134 575 591 748 779 955 1036 1920 2267 2975 3795 135 196 955 1421 1002 1496 9 16 12 16 16 4 3 -8 38 -175 77 -370 117 -581 320 -1554 490 -2349 205 -956 194 -901 189 -905 -10 -8 -1026 -273 -1306 -341 -690 -166 -1406 -317 -2013 -425 -129 -23 -250 -48 -267 -56 -37 -15 -73 -67 -73 -104 0 -52 33 -85 126 -125 496 -212 1139 -563 1924 -1050 140 -87 386 -238 545 -335 541 -330 1082 -670 1590 -998 149 -96 284 -181 302 -188 52 -22 113 -18 156 11 42 29 77 90 77 136 0 24 -622 3340 -645 3436 -4 19 3 24 58 41 953 306 1954 660 2746 972 623 246 666 264 669 288 2 12 1 22 -2 22 -3 0 -101 -36 -218 -81 -414 -157 -950 -349 -1443 -515 -643 -218 -1828 -584 -1843 -570 -6 7 -3 -13 -223 1156 -264 1403 -466 2431 -570 2910 -34 157 -58 201 -134 242 -60 32 -106 40 -162 27z m1054 -6092 c172 -821 311 -1495 310 -1499 -1 -4 -78 40 -172 99 -506 315 -1875 1126 -2361 1398 -429 241 -645 356 -977 521 -218 109 -293 151 -280 156 10 4 95 23 188 43 761 163 1876 454 2790 728 99 30 182 52 185 50 2 -2 145 -675 317 -1496z"/></g></svg></span><span><span class="word">ac<span class="k">k</span>tvt<span class="tm">™</span></span><span class="sub" style="display:block">unlimited opportunity</span><span class="by">by Prowessz Consulting Services LLP</span></span></a>
         <p style="max-width:320px">Business software from a consulting practice that runs it with you first. Built in India.</p>
       </div>
-      <div><h5>Products</h5><a href="../#bms">Business Management Suite</a><a href="../#dps">Data Protection Suite</a><a href="../#tiers">Tiers</a><a href="https://acktvt.prowessz.com/?app=demo" target="_blank" rel="noopener">Live demo — BMS</a><a href="../bms/">Get started — BMS</a><a href="../dps/">Get started — DPS</a></div>
+      <div><h5>Products</h5><a href="../#bms">Business Management Suite</a><a href="../#dps">Data Protection Suite</a><a href="../#meet">acktvt Meet</a><a href="../#genuine">acktvt Genuine</a><a href="../#origin">acktvt Origin</a><a href="../#tiers">Tiers</a><a href="https://acktvt.prowessz.com/?app=demo" target="_blank" rel="noopener">Live demo — BMS</a><a href="../bms/">Get started — BMS</a><a href="../dps/">Get started — DPS</a></div>
       <div><h5>Company</h5><a href="https://prowessz.com" target="_blank" rel="noopener">Prowessz Consulting</a><a href="../#how">How we work</a><a href="../#contact">Contact</a><a href="mailto:acktvt@prowessz.com">acktvt@prowessz.com</a></div>
       <div><h5>Sign in</h5><a href="../login/">Client portal</a><a href="https://acktvt.prowessz.com/?app=bms" target="_blank" rel="noopener">Business Management Suite</a><a href="https://acktvt.prowessz.com/?app=dps" id="foot-dps" target="_blank" rel="noopener">Data Protection Suite</a><a href="../privacy/" id="foot-privacy">Privacy notice</a><a href="../#" class="pz-cookie-link">Cookie settings</a></div>
     </div>
