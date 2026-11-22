@@ -1,0 +1,68 @@
+{
+  "title": "Is your business in control?",
+  "questions": [
+    {"id": "q1", "multi": false, "text": "What best describes your business?", "options": [
+      ["make_to_order", "Make to order", "Engineering, fabrication, projects"],
+      ["make_to_stock", "Make to stock", "Batch or regular production"],
+      ["both", "Both", "Some orders made to order, some from stock"],
+      ["trading", "Trading and distribution", "Buy, stock and dispatch"]]},
+    {"id": "q2", "multi": false, "text": "How do you track an order from enquiry to dispatch?", "options": [
+      ["one_system", "One software system", ""],
+      ["software_excel", "Software plus Excel", ""],
+      ["excel_whatsapp", "Mostly Excel and WhatsApp", ""],
+      ["paper", "Paper or memory", ""]]},
+    {"id": "q3", "multi": false, "text": "How many Excel sheets does your team update every week?", "options": [
+      ["s0_5", "0 to 5", ""],
+      ["s6_15", "6 to 15", ""],
+      ["s16_30", "16 to 30", ""],
+      ["s30_plus", "More than 30", ""]]},
+    {"id": "q4", "multi": false, "text": "How often do delivery dates slip, or stock surprise you?", "options": [
+      ["rarely", "Rarely", ""],
+      ["monthly", "About once a month", ""],
+      ["weekly", "Every week", ""],
+      ["daily", "Almost daily", ""]]},
+    {"id": "q5", "multi": false, "text": "A customer asks “Where is my order?” How long does it take to answer?", "options": [
+      ["minute", "Under a minute", ""],
+      ["hour", "Within an hour", ""],
+      ["same_day", "The same day", ""],
+      ["call_around", "We have to call around", ""]]},
+    {"id": "q6", "multi": false, "text": "How quickly can you see today’s sales, dues and stock?", "options": [
+      ["live", "Live, any time", ""],
+      ["weekly", "In a weekly report", ""],
+      ["month_end", "At month end", ""],
+      ["accountant", "Only when the accountant prepares it", ""]]},
+    {"id": "q7", "multi": false, "text": "If a figure is changed, can you see who changed it and when?", "options": [
+      ["always", "Always", ""],
+      ["sometimes", "Sometimes", ""],
+      ["rarely", "Rarely", ""],
+      ["no", "No", ""]]},
+    {"id": "q8", "multi": true, "max": 3, "text": "What are your biggest headaches right now?", "hint": "Pick up to 3", "options": [
+      ["dispatch", "Dispatch delays", ""],
+      ["stock", "Stock mismatches", ""],
+      ["planning", "Production planning", ""],
+      ["cash", "Cash and receivables", ""],
+      ["accountability", "Team accountability", ""],
+      ["quality", "Quality rejections", ""],
+      ["tenders", "Tender and quotation follow-ups", ""]]}
+  ],
+  "bands": {
+    "firefighting": ["Firefighting mode", "Your business runs on people’s effort and memory. It works, but it is tiring, and it limits how fast you can grow."],
+    "partly": ["Partly in control", "Some systems are in place, but the gaps between them still cost time and bring surprises."],
+    "in_control": ["In control", "You have a good grip. The gains from here are in fine-tuning and visibility."]
+  },
+  "tips": {
+    "q2": ["Put every order on one screen", "When orders live in Excel and WhatsApp, the latest status sits in someone’s head. One screen from enquiry to dispatch lets anyone see where an order stands.", "Sales, work orders and dispatch in one place, with promised and actual dates."],
+    "q3": ["Retire the spreadsheets one by one", "Every extra sheet is another version of the truth, and someone’s evening spent matching them up. Start with the sheet that is updated most often.", "Orders, stock, purchase and production in one system, so the sheets are no longer needed."],
+    "q4": ["Plan against real capacity and stock", "Most slipped dates are promised before anyone checks machines and material. Check both before a date is given.", "Production planning and material readiness for every work order, with Predictive & order outlook."],
+    "q5": ["Answer “Where is my order?” in seconds", "If the answer needs three phone calls, the customer feels it. Give everyone the same live status.", "Live order and dispatch status, with dispatch release sign-off."],
+    "q6": ["See today’s numbers today", "Decisions made on last month’s figures are guesses. A short daily look at sales, dues and stock changes how the week is run.", "Live views of sales, receivables, payables and stock."],
+    "q7": ["Know who changed what, and when", "When a figure changes without a trace, trust goes with it. A record of every change settles questions in minutes.", "An audit log of every change, with roles and approvals."],
+    "h_dispatch": ["Make dispatch predictable", "Fix a daily dispatch plan from confirmed stock, and release only what is checked and packed.", "Dispatch controls with release sign-off, delivery challans and invoices."],
+    "h_stock": ["Make stock figures match the shelf", "Record every issue and receipt when it happens, and count a few items every week instead of everything once a year.", "Stores with bin cards, issues against work orders, stock counts and reorder alerts."],
+    "h_planning": ["Plan the week before it starts", "A simple weekly plan by machine and order, reviewed every morning, removes most of the daily firefighting.", "Production planning, job cards and machine efficiency (OEE)."],
+    "h_cash": ["Collect faster, worry less", "Review dues every week, oldest first, and note every promise to pay. Small habits shorten the cash cycle.", "A collection worklist, ageing, promises to pay and a weekly cash-flow view."],
+    "h_accountability": ["Make ownership visible", "Give every order and task a named owner and a date. Visible ownership does more than reminders.", "Roles, approvals and each person’s own work list, with an audit log."],
+    "h_quality": ["Catch problems before the customer does", "Inspect at receipt, during production and before dispatch, and record every rejection with its reason. Patterns show up quickly.", "Inspections, test certificates and an NCR / CAPA register."],
+    "h_tenders": ["Never miss a follow-up", "Keep every enquiry, quotation and tender in one list with its due date and next step, and review it weekly.", "A tender and quotation pipeline with due dates, follow-ups and win rates."]
+  }
+}

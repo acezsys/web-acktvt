@@ -22,7 +22,8 @@ footer = re.search(r'<footer>.*?</footer>', src, re.S).group(0)
 def relink(h):
     h = h.replace('href="./"', 'href="../"').replace('href="#', 'href="../#')
     return (h.replace('href="bms/"', 'href="../bms/"').replace('href="dps/"', 'href="../dps/"')
-             .replace('href="privacy/"', 'href="../privacy/"').replace('href="login/"', 'href="../login/"'))
+             .replace('href="privacy/"', 'href="../privacy/"').replace('href="login/"', 'href="../login/"')
+             .replace('href="check/"', 'href="../check/"'))
 nav, footer = relink(nav), relink(footer)
 nav = nav.replace('class="nav" id="nav"', 'class="nav scrolled" id="nav"')
 
@@ -280,7 +281,7 @@ page('bms', 'Business Management Suite', 'Business Management Suite · for growi
       <div class="card"><h3>Want to look around first?</h3><p>The live demo is a real deployment loaded with a sample company — orders, production, stores, dispatch and the dashboard, all populated. Open it, click anything; nothing you do there affects a real business.</p>
         <p style="margin-top:12px"><a class="btn btn-primary" href="{DEMO_BMS}" target="_blank" rel="noopener">Open the live demo →</a></p></div>
       <div class="card"><h3>What the suite covers</h3><p>Nine modules that run a growing company end to end, built around GST and the way Indian manufacturing actually works, with add-ons you switch on when you need them.</p>
-        <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Batch &amp; serial tracking</span><span>Dispatch &amp; release sign-off</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span><span>Service &amp; AMC · add-on</span><span>Order Intelligence · add-on</span><span>acktvt Meet · add-on</span><span>acktvt Genuine · add-on</span><span>acktvt Origin · add-on</span></div></div>
+        <div class="mods"><span>Sales &amp; GST invoicing</span><span>Tender / bid &amp; CRM</span><span>Production stages</span><span>Lean material planning</span><span>Purchase &amp; inventory</span><span>Quality &amp; lab reports</span><span>Batch &amp; serial tracking</span><span>Dispatch &amp; release sign-off</span><span>Receivables &amp; finance</span><span>HR &amp; roles</span><span>Service &amp; AMC · add-on</span><span>Order Intelligence · add-on</span><span>acktvt Meet · add-on</span><span>acktvt Genuine · add-on</span><span>acktvt Origin · add-on</span><span>Production planning · add-on</span><span>acktvt Scan · add-on</span><span>Customer &amp; vendor portals · add-on</span></div></div>
       <div class="card"><h3>Prefer to talk first?</h3><p>Message us on WhatsApp and we'll call back.</p><p style="margin-top:12px"><a class="btn btn-primary" href="{WA}" target="_blank" rel="noopener">WhatsApp +91 80802 55000</a></p></div>
      """,
      '[acktvt] Business Management Suite enquiry',
@@ -315,20 +316,21 @@ priv = f"""<!doctype html>
   <h2>What we collect and why</h2>
   <ul>
     <li><b>Enquiry forms</b> (Data Protection Suite and Business Management Suite pages): your name, organisation, work e-mail, phone number, your answers to the short questions, and anything you write in the comment box. <i>Purpose:</i> to reply to your enquiry, arrange a walkthrough and, if you ask for one, set up a trial. <i>Basis:</i> your consent, given by ticking the box before you send.</li>
+    <li><b>"Is your business in control?" check</b> (acktvt.com/check/): your answers to its 8 questions, the score and tips worked out from them, where the link came from (for example LinkedIn or WhatsApp) and the type of device. On their own these do not identify you. If you ask for the detailed report, also your name, company, WhatsApp number, e-mail (optional) and whether you would like occasional updates. <i>Purpose:</i> to show your score, send your report, offer a walkthrough and, if you agree, send updates; and, as overall counts, to improve the check. <i>Basis:</i> your consent, given by ticking the box before you send.</li>
     <li><b>WhatsApp and e-mail</b> you send us: the contents of your message and your contact details, for the same purpose.</li>
     <li><b>Website visits:</b> this site is a static page hosted on GitHub Pages. Fonts and images are served from this site itself. The hosting provider may keep standard server logs (IP address, browser, pages requested) for security and operations. We do not run advertising trackers.</li>
     <li><b>Analytics, only if you agree:</b> if you click <i>Accept</i> on the cookie banner, we use Google Analytics and, where enabled, Microsoft Clarity to understand how the site is used: pages visited, clicks and scrolling, device and browser type, and approximate location (city or country). Anything typed into a page is masked. Nothing is loaded and no analytics cookies are set until you accept. You can change your choice at any time through <i>Cookie settings</i> in the footer. <i>Purpose:</i> to improve the site. <i>Basis:</i> your consent. Analytics data is kept for up to 14 months.</li>
     <li><b>Explainer videos:</b> the videos are hosted on YouTube. Nothing is loaded from YouTube until you press play; when you do, the video is served from YouTube's privacy-enhanced mode (youtube-nocookie.com) and Google's privacy policy applies to that playback.</li>
   </ul>
   <h2>Who processes it</h2>
-  <p>Form submissions are relayed to our inbox by FormSubmit (a form-to-e-mail service) and stored in our business e-mail. WhatsApp messages are handled by WhatsApp under its own terms. If you accept analytics, Google (Analytics) and Microsoft (Clarity) process usage data for us; they may do so outside India. We do not sell personal data and do not share it with anyone else unless the law requires it.</p>
+  <p>Form submissions are relayed to our inbox by FormSubmit (a form-to-e-mail service) and stored in our business e-mail. Answers and details from the check are stored in our own database, hosted for us by Supabase. WhatsApp messages are handled by WhatsApp under its own terms. If you accept analytics, Google (Analytics) and Microsoft (Clarity) process usage data for us; they may do so outside India. We do not sell personal data and do not share it with anyone else unless the law requires it.</p>
   <h2>How long we keep it</h2>
-  <p>Enquiry details are kept for as long as we are talking, and for up to 24 months after the last contact so that we can pick up the conversation if you come back. If you become a client, your details move to our client records under the engagement letter. You can ask us to delete them sooner at any time.</p>
+  <p>Enquiry details are kept for as long as we are talking, and for up to 24 months after the last contact so that we can pick up the conversation if you come back. Answers and details from the check are kept for 12 months from the day you send them and are then erased automatically. If you become a client, your details move to our client records under the engagement letter. You can ask us to delete them sooner at any time.</p>
   <h2>Your rights</h2>
   <p>You may ask us for a summary of the personal data we hold about you, ask us to correct or erase it, withdraw your consent, or nominate someone to exercise these rights on your behalf. Write to <a href="mailto:privacy@prowessz.com" style="text-decoration:underline">privacy@prowessz.com</a>; we respond within the time the Rules allow and usually much sooner. If you are not satisfied with our response, you may approach the Data Protection Board of India.</p>
   <h2>Contact</h2>
   <p>Prowessz Consulting Services LLP, India · <a href="mailto:acktvt@prowessz.com" style="text-decoration:underline">acktvt@prowessz.com</a> · WhatsApp <a href="{WA}" style="text-decoration:underline">+91 80802 55000</a> · <a href="https://prowessz.com" style="text-decoration:underline">prowessz.com</a>.</p>
-  <p style="margin-top:28px;font-size:13px;color:var(--ink-soft)">Last updated October 2026. Changes are posted on this page.</p>
+  <p style="margin-top:28px;font-size:13px;color:var(--ink-soft)">Last updated November 2026. Changes are posted on this page.</p>
 </div></section>
 {footer}
 <script>document.getElementById('year').textContent = new Date().getFullYear(); document.getElementById('burger')?.addEventListener('click', () => {{ const n = document.getElementById('nav'); n.classList.toggle('open'); }});</script>
@@ -463,3 +465,6 @@ nf = f"""<!doctype html>
 """
 open(os.path.join(HERE, '404.html'), 'w', encoding='utf-8').write(nf)
 print('wrote 404.html')
+
+# ---------------------------------------------------------------- the check (acktvt.com/check/), see check_page.py
+exec(open(os.path.join(HERE, 'check_page.py'), encoding='utf-8').read())
