@@ -220,9 +220,13 @@ CHECK_JS = """
     if (!form.elements.consent.checked) return bad('Please tick the box to agree, so that we can send your report.', 'consent');
     send.disabled = true; send.textContent = 'Sending…';
     try {
-      await rpc('public_survey_contact', { p_id: sent.id, p_token: sent.token, p: { name: f.name, company: f.company, phone: f.phone, email: f.email || '', consent: 'true', updates: form.elements.updates.checked ? 'true' : 'false' } });
+      const c = await rpc('public_survey_contact', { p_id: sent.id, p_token: sent.token, p: { name: f.name, company: f.company, phone: f.phone, email: f.email || '', consent: 'true', updates: form.elements.updates.checked ? 'true' : 'false' } });
+      const link = $('#chk-report');
+      if (c && c.report_token) link.href = 'report/?id=' + encodeURIComponent(sent.id) + '&t=' + encodeURIComponent(c.report_token);
+      else link.parentElement.hidden = true;
+      if (c && c.emailed) { const m = $('#chk-mailed'); m.textContent = 'We have also e-mailed the link to ' + f.email.trim() + '.'; m.hidden = false; }
       form.hidden = true; $('#chk-thanks').hidden = false; $('#chk-thanks').focus();
-    } catch (ex) { send.disabled = false; send.textContent = 'Send my report'; bad(ex.message || 'Could not send. Please try again.', 'name'); }
+    } catch (ex) { send.disabled = false; send.textContent = 'Get my report'; bad(ex.message || 'Could not send. Please try again.', 'name'); }
   });
 
   // ---- share
@@ -275,7 +279,7 @@ check_html = f"""<!doctype html>
         <div class="chk-tips"><h3>Your 3 practical tips</h3><div id="chk-tiplist"></div></div>
         <div class="chk-lead">
           <h3>Get your detailed report and a free 30-minute walkthrough</h3>
-          <p class="sub">We will send your report on WhatsApp within one working day, and show how the tips above would work in your business. Optional.</p>
+          <p class="sub">Your personal report opens here straight away, and we will WhatsApp you to set up the walkthrough. Your score and tips above are yours either way. Leave your details only if you would like the report.</p>
           <form id="chk-form" novalidate>
             <div id="chk-ferr" class="err" role="alert"></div>
             <div class="row">
@@ -288,9 +292,9 @@ check_html = f"""<!doctype html>
             </div>
             <label class="consent"><input type="checkbox" name="consent" value="yes"><span>I agree that Prowessz Consulting may contact me about this report and acktvt BMS. See the <a href="../privacy/" style="text-decoration:underline">privacy notice</a>.</span></label>
             <label class="consent" style="margin-top:-8px"><input type="checkbox" name="updates" value="yes"><span>Also send me occasional updates from acktvt. I can stop them at any time.</span></label>
-            <div class="actions"><button class="btn btn-primary" id="chk-send" type="submit">Send my report</button><span class="note">Your answers and details are kept for 12 months.</span></div>
+            <div class="actions"><button class="btn btn-primary" id="chk-send" type="submit">Get my report</button><span class="note">Your answers and details are kept for 12 months.</span></div>
           </form>
-          <div id="chk-thanks" class="chk-done" tabindex="-1" hidden><b>Thank you. Your report is on its way.</b>We will WhatsApp you within one working day. Meanwhile, the live demo is open: <a href="{DEMO_BMS}" target="_blank" rel="noopener" style="color:#FFD873;text-decoration:underline">see acktvt BMS with a sample company</a>.</div>
+          <div id="chk-thanks" class="chk-done" tabindex="-1" hidden><b>Thank you. Your report is ready.</b><p style="margin:12px 0 14px"><a class="btn btn-primary" id="chk-report" href="#" target="_blank" rel="noopener">Open my report</a></p><p id="chk-mailed" style="margin:0 0 6px" hidden></p><p style="margin:0">We will WhatsApp you to set up your free 30-minute walkthrough. Meanwhile, the live demo is open: <a href="{DEMO_BMS}" target="_blank" rel="noopener" style="color:#FFD873;text-decoration:underline">see acktvt BMS with a sample company</a>.</p></div>
           <div id="chk-offline" class="chk-done" hidden><b>Your score is ready, but we could not save it.</b>For your detailed report, WhatsApp us on <a href="{WA}" style="color:#FFD873;text-decoration:underline">+91 80802 55000</a>.</div>
         </div>
         <div class="chk-share"><span>Share this check:</span><a id="sh-wa" href="#" target="_blank" rel="noopener">WhatsApp</a><a id="sh-li" href="#" target="_blank" rel="noopener">LinkedIn</a><button id="sh-copy" type="button">Copy link</button></div>
