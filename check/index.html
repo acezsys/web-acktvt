@@ -699,6 +699,10 @@
   .chk-lead .note{color:rgba(255,255,255,.7)}
   .chk-done{text-align:center;padding:10px 0}
   .chk-done b{display:block;font-size:19px;margin-bottom:6px}
+  .chk-guide{margin:18px auto 0;max-width:460px;text-align:left;border:1px solid rgba(255,216,115,.45);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.04)}
+  .chk-guide span{display:block;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:#FFD873;font-weight:700}
+  .chk-guide b{display:block;font-size:18px;margin:6px 0 2px}
+  .chk-guide p{margin:0 0 12px;font-size:14px;opacity:.85}
   .chk-share{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px;font-size:14px;color:var(--ink-soft)}
   .chk-share a,.chk-share button{font:inherit;font-size:13.5px;font-weight:600;border:1.5px solid var(--line);border-radius:99px;padding:8px 14px;background:#fff;color:var(--ink-2);cursor:pointer;text-decoration:none}
   .chk-share a:hover,.chk-share button:hover{border-color:var(--green);color:var(--green-deep)}
@@ -811,7 +815,7 @@
             <label class="consent" style="margin-top:-8px"><input type="checkbox" name="updates" value="yes"><span>Also send me occasional updates from acktvt. I can stop them at any time.</span></label>
             <div class="actions"><button class="btn btn-primary" id="chk-send" type="submit">Get my report</button><span class="note">Your answers and details are kept for 12 months.</span></div>
           </form>
-          <div id="chk-thanks" class="chk-done" tabindex="-1" hidden><b>Thank you. Your report is ready.</b><p style="margin:12px 0 14px"><a class="btn btn-primary" id="chk-report" href="#" target="_blank" rel="noopener">Open my report</a></p><p id="chk-mailed" style="margin:0 0 6px" hidden></p><p style="margin:0">We will WhatsApp you to set up your free 30-minute walkthrough. Meanwhile, the live demo is open: <a href="https://acktvt.prowessz.com/?app=demo" target="_blank" rel="noopener" style="color:#FFD873;text-decoration:underline">see acktvt BMS with a sample company</a>.</p></div>
+          <div id="chk-thanks" class="chk-done" tabindex="-1" hidden><b>Thank you. Your report is ready.</b><p style="margin:12px 0 14px"><a class="btn btn-primary" id="chk-report" href="#" target="_blank" rel="noopener">Open my report</a></p><p id="chk-mailed" style="margin:0 0 6px" hidden></p><p style="margin:0">We will WhatsApp you to set up your free 30-minute walkthrough. Meanwhile, the live demo is open: <a href="https://acktvt.prowessz.com/?app=demo" target="_blank" rel="noopener" style="color:#FFD873;text-decoration:underline">see acktvt BMS with a sample company</a>.</p><div class="chk-guide"><span>A complimentary guide from Prowessz Consulting Services LLP</span><b>The Strategic Pause</b><p>35 honest questions for the people who run the business, and an hour to think about them.</p><a class="btn chk-ghost" href="/guides/the-strategic-pause.pdf" target="_blank" rel="noopener">Download the guide (PDF)</a></div></div>
           <div id="chk-offline" class="chk-done" hidden><b>Your score is ready, but we could not save it.</b>For your detailed report, WhatsApp us on <a href="https://wa.me/918080255000?text=Hi%2C%20I%27m%20interested%20in%20acktvt%20products%2C%20Let%27s%20connect.." style="color:#FFD873;text-decoration:underline">+91 80802 55000</a>.</div>
         </div>
         <div class="chk-share"><span>Share this check:</span><a id="sh-wa" href="#" target="_blank" rel="noopener">WhatsApp</a><a id="sh-li" href="#" target="_blank" rel="noopener">LinkedIn</a><button id="sh-copy" type="button">Copy link</button></div>

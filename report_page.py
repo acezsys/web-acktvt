@@ -53,6 +53,10 @@ REPORT_CSS = """
   .rp-how{font-size:13.5px;color:var(--green-deep);margin:0}
   .rp-how em{font-style:normal;font-weight:700}
   .rp-next{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .rp-guide{margin-top:18px;background:#F7F4EA;border-left:3px solid #C9A227;border-radius:10px;padding:14px 18px}
+  .rp-guide span{display:block;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:#8A6D12;font-weight:700}
+  .rp-guide b{display:block;font-size:18px;color:#111E46;margin:5px 0 2px}
+  .rp-guide p{margin:0 0 12px;font-size:14px;color:var(--ink-2)}
   .rp-foot{padding:20px 34px 24px;background:#F6F8F6;font-size:13px;color:var(--ink-2);line-height:1.6}
   .rp-foot .c{display:flex;flex-wrap:wrap;gap:6px 18px;font-weight:600;color:var(--ink);margin:4px 0 10px}
   .rp-foot .c a{color:var(--ink);text-decoration:none}
@@ -182,6 +186,7 @@ REPORT_JS = """
     <h2>Next step</h2>
     <p style="margin:0 0 14px;font-size:15px;color:var(--ink-2)">In a free 30-minute walkthrough we show how these tips would work in ${esc(d.company)}, on your own order flow.</p>
     <div class="rp-next"><a class="btn btn-green" href="${wa}" target="_blank" rel="noopener">Book my walkthrough on WhatsApp</a><a class="btn" style="border:1.5px solid var(--line)" href="${DEMO}" target="_blank" rel="noopener">See the live demo</a></div>
+    <div class="rp-guide"><span>A complimentary guide from Prowessz Consulting Services LLP</span><b>The Strategic Pause</b><p>35 honest questions for the people who run the business, and an hour to think about them.</p><a class="btn" style="border:1.5px solid #C9A227" href="/guides/the-strategic-pause.pdf" target="_blank" rel="noopener">Download the guide (PDF)</a></div>
   </div>
   <div class="rp-foot">
     <div style="font-weight:700;color:var(--ink)">${esc(C.line)}</div>

@@ -469,3 +469,4 @@ print('wrote 404.html')
 # ---------------------------------------------------------------- the check (acktvt.com/check/), see check_page.py
 exec(open(os.path.join(HERE, 'check_page.py'), encoding='utf-8').read())
 exec(open(os.path.join(HERE, 'report_page.py'), encoding='utf-8').read())
+exec(open(os.path.join(HERE, 'unsub_page.py'), encoding='utf-8').read())
